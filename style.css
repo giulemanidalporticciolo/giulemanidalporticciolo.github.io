@@ -1,0 +1,127 @@
+/* RESET */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000;
+    background: #fff;
+    line-height: 1.4;
+}
+
+/* LAYOUT */
+
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 30px 80px;
+}
+
+section {
+    margin-bottom: 70px;
+}
+
+/* TYPOGRAPHY */
+
+h1 {
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    margin: 0 0 60px;
+}
+
+h2 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 30px;
+}
+
+h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 40px 0 20px;
+}
+
+p,
+li {
+    font-size: 1.5rem;
+}
+
+p {
+    margin: 0 0 15px;
+}
+
+/* LINKS */
+
+a {
+    color: #0b57d0;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/* LISTE NUMERATE */
+
+ol {
+    margin: 0;
+    padding-left: 2rem;
+}
+
+ol li {
+    margin-bottom: 18px;
+    padding-left: 10px;
+}
+
+/* LISTE GENERICHE */
+
+ul {
+    margin: 20px 0;
+    padding-left: 2rem;
+}
+
+ul li {
+    margin-bottom: 12px;
+}
+
+/* SEZIONE INDICAZIONI */
+
+section > ul:first-of-type li {
+    margin-bottom: 20px;
+}
+
+/* SEZIONI INTERNE CONSIGLI */
+
+section section {
+    margin-top: 50px;
+    margin-bottom: 0;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    main {
+        padding: 25px 20px 50px;
+    }
+
+    p,
+    li {
+        font-size: 1.15rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+}

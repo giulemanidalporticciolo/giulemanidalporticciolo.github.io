@@ -124,13 +124,14 @@ ul {
 
 ul li {
     margin-bottom: 12px;
+    list-style-type: circle;
 }
 
 /* SEZIONE INDICAZIONI */
 
-section > ul:first-of-type li {
+/*section > ul:first-of-type li {
     margin-bottom: 20px;
-}
+}*/
 
 /* SEZIONI INTERNE CONSIGLI */
 
@@ -372,6 +373,7 @@ label[for="tab-pec"]::before {
 }
 .step-details li {
     margin-bottom: 4px;
+    list-style-type: none;
 }
 .step-details .field-label {
     text-transform: uppercase;

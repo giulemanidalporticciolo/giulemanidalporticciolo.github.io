@@ -34,10 +34,13 @@ section {
 /* TYPOGRAPHY */
 
 h1 {
-    font-size: 42px;
+    font-family: "Barlow", sans-serif;
+    font-size: 32px;
     font-weight: 800;
     line-height: 1.05;
     margin: 0 0 32px;
+
+    letter-spacing: .01em;
 }
 
 @media (min-width: 768px) {
@@ -384,10 +387,11 @@ label[for="tab-pec"]::before {
 }
 
 .step-details .field-value {
-    font-size: .8em;
+    font-size: 1em;
 }
 .step-details .field-code {
   font-family: ui-monospace, monospace;
+  font-size: .9em;
 }
 
 .step-details {

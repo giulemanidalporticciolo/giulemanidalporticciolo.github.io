@@ -263,3 +263,37 @@ label[for="tab-pec"]::before {
 .project-code strong {
     color: #16804d;
 }
+
+
+
+.topics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.topic-card {
+    padding: 16px;
+    text-align: center;
+
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+
+    background: #fff;
+}
+
+.topic-icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.topic-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+    .topics-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

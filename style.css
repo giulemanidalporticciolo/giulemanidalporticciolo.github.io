@@ -321,3 +321,11 @@ label[for="tab-pec"]::before {
 .portal-button:hover {
     background: #f8fbff;
 }
+
+
+.external-link::before {
+    content: "🔗";
+    margin-right: 4px;
+    text-decoration: none;
+    display: inline-block;
+}

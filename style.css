@@ -33,10 +33,16 @@ section {
 /* TYPOGRAPHY */
 
 h1 {
-    font-size: 4rem;
+    font-size: 42px;
     font-weight: 800;
     line-height: 1.05;
-    margin: 0 0 60px;
+    margin: 0 0 40px;
+}
+
+@media (min-width: 768px) {
+    h1 {
+        font-size: 56px;
+    }
 }
 
 h2 {

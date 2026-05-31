@@ -390,8 +390,8 @@ label[for="tab-pec"]::before {
     margin-top: 12px;
     padding: 14px 16px;
 
-    background: #fffdf2;
-    border: 1px solid #ece6c9;
+    background: #fffbe6;
+    border: 1px solid #e6d89a;
     border-radius: 12px;
 }
 .step-details li {

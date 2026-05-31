@@ -335,11 +335,6 @@ label[for="tab-pec"]::before {
 }
 */
 
-.document-file::before {
-    content: "📄";
-    margin-right: 4px;
-}
-
 .document-file {
     display: inline-block;
 
@@ -350,7 +345,8 @@ label[for="tab-pec"]::before {
     background: #f3f6fb;
     border: 1px solid #d9e2f0;
 
-    font-size: 0.95em;
+    font-family: ui-monospace, monospace;
+    font-size: 0.75em;
 }
 
 .step-details {

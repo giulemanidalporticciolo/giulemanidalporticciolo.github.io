@@ -75,7 +75,6 @@ a {
 }
 
 a:hover {
-    text-decoration: none;
 }
 
 /* LISTE NUMERATE */
@@ -240,4 +239,28 @@ label[for="tab-spid"]::before {
 
 label[for="tab-pec"]::before {
     content: "\1F4E7";
+}
+
+
+
+.project-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 20px;
+    margin-bottom: 30px;
+
+    background: #f4faf4;
+    border: 1px solid #d9ead9;
+    border-radius: 16px;
+}
+
+.project-code {
+    font-size: 1.1rem;
+}
+
+.project-code strong {
+    color: #16804d;
+    font-size: 1.4rem;
 }

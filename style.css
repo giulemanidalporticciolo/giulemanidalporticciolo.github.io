@@ -297,3 +297,27 @@ label[for="tab-pec"]::before {
         grid-template-columns: repeat(4, 1fr);
     }
 }
+
+
+
+.portal-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    padding: 18px 24px;
+    margin-top: 12px;
+
+    border: 2px solid #2563eb;
+    border-radius: 18px;
+
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.portal-button:hover {
+    background: #f8fbff;
+}

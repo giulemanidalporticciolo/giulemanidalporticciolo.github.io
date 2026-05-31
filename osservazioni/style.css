@@ -41,7 +41,7 @@ h1 {
     margin: 0 0 32px;
 
     letter-spacing: .01em;
-    line-height: 0.95;
+    line-height: 1em;
 }
 
 @media (min-width: 768px) {

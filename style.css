@@ -80,13 +80,36 @@ a:hover {
 /* LISTE NUMERATE */
 
 ol {
-    margin: 0;
-    padding-left: 2rem;
+    list-style: none;
+    counter-reset: step;
+    padding: 0;
 }
 
 ol li {
-    margin-bottom: 18px;
-    padding-left: 10px;
+    counter-increment: step;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+ol li::before {
+    content: counter(step);
+    flex-shrink: 0;
+
+    width: 32px;
+    height: 32px;
+
+    border-radius: 50%;
+
+    background: #4f7df3;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 700;
 }
 
 /* LISTE GENERICHE */

@@ -170,3 +170,15 @@ section section {
     background: #f5f5f5;
     font-weight: 700;
 }
+
+.tabs-nav label::before {
+    margin-right: 8px;
+}
+
+label[for="tab-spid"]::before {
+    content: "\1F464";
+}
+
+label[for="tab-pec"]::before {
+    content: "\1F4E7";
+}

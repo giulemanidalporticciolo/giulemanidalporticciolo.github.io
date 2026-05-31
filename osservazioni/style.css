@@ -335,6 +335,11 @@ label[for="tab-pec"]::before {
 }
 */
 
+.document-file::before {
+    content: "📄";
+    margin-right: 4px;
+}
+
 .document-file {
     display: inline-block;
 
@@ -405,13 +410,38 @@ label[for="tab-pec"]::before {
 .deadline-box {
     display: inline-block;
 
-    margin: 0 0 24px;
+    margin: 0 0 32px;
     padding: 12px 16px;
 
-    background: #fff1f2;
-    border: 1px solid #fda4af;
+    background: #fff1eb;
+    border: 1px solid #f7b49a;
     border-radius: 12px;
 
-    color: #9f1239;
-    font-weight: 700;
+    color: #b54708;
+    font-weight: 600;
+}
+
+
+
+.hero {
+    margin-bottom: 32px;
+}
+
+.hero-slogan {
+    margin: 0 0 16px;
+
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 800;
+    line-height: .95;
+    text-transform: uppercase;
+}
+
+.hero-intro {
+    margin: 0;
+
+    font-size: 1.25rem;
+    max-width: 30rem;
+}
+.hero-slogan {
+    letter-spacing: -.03em;
 }

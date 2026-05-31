@@ -79,20 +79,20 @@ a:hover {
 
 /* LISTE NUMERATE */
 
-ol {
+.steps {
     list-style: none;
     counter-reset: step;
     padding: 0;
 }
 
-ol li {
+.steps > li {
     counter-increment: step;
     position: relative;
     padding-left: 48px;
     margin-bottom: 20px;
 }
 
-ol li::before {
+.steps > li::before {
     content: counter(step);
 
     position: absolute;
@@ -249,7 +249,6 @@ label[for="tab-pec"]::before {
     gap: 16px;
 
     padding: 20px;
-    margin-bottom: 30px;
 
     background: #f4faf4;
     border: 1px solid #d9ead9;
@@ -352,4 +351,35 @@ label[for="tab-pec"]::before {
     border: 1px solid #d9e2f0;
 
     font-size: 0.95em;
+}
+
+.step-details {
+    font-size: 1rem;
+}
+.step-details {
+    list-style: none;
+    padding-left: 0;
+}
+.step-details {
+    margin-top: 12px;
+}
+
+.step-details li::before {
+    display: none;
+}
+.step-details li {
+    margin-bottom: 4px;
+}
+.step-details .field-label {
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    font-size: .8em;
+    color: #666;
+}
+
+.step-details .field-value {
+    font-size: .8em;
+}
+.step-details .field-code {
+  font-family: ui-monospace, monospace;
 }

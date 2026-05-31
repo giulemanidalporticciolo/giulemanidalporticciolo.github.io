@@ -71,6 +71,7 @@ p {
 
 a {
     color: #0b57d0;
+    overflow-wrap: anywhere;
 }
 
 a:hover {
@@ -87,15 +88,17 @@ ol {
 
 ol li {
     counter-increment: step;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    position: relative;
+    padding-left: 48px;
     margin-bottom: 20px;
 }
 
 ol li::before {
     content: counter(step);
-    flex-shrink: 0;
+
+    position: absolute;
+    left: 0;
+    top: 0;
 
     width: 32px;
     height: 32px;
@@ -103,7 +106,7 @@ ol li::before {
     border-radius: 50%;
 
     background: #4f7df3;
-    color: white;
+    color: #fff;
 
     display: flex;
     align-items: center;

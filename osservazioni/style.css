@@ -65,11 +65,22 @@ h3 {
 
 p,
 li {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+}
+
+@media (max-width: 768px) {
+    p,
+    li {
+        font-size: 1.5rem;
+    }
 }
 
 p {
     margin: 0 0 15px;
+}
+
+strong {
+    font-weight: 600;
 }
 
 /* LINKS */
@@ -117,6 +128,16 @@ a:hover {
     justify-content: center;
 
     font-weight: 700;
+}
+
+.steps > li:last-child::before {
+    content: "";
+
+    background: #22c55e;
+    background-image: url("img/check.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px 16px;
 }
 
 /* LISTE GENERICHE */
@@ -428,7 +449,6 @@ label[for="tab-pec"]::before {
     border-radius: 12px;
 
     color: #b54708;
-    font-weight: 600;
 }
 
 

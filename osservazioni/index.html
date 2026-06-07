@@ -295,7 +295,7 @@
                        height="32">
               </a>
 
-              <a href="#"
+              <a href="https://tr.ee/osservazioni"
                  id="copy-link">
                   <img src="img/share/copy.png"
                        alt="Copia link"
@@ -317,9 +317,8 @@
           <script>
           document.addEventListener('DOMContentLoaded', () => {
 
-              const pageUrl = location.href;
-
               const copyLinkBtn = document.getElementById('copy-link');
+              const pageUrl = copyLinkBtn.getAttribute('href');
 
               copyLinkBtn.addEventListener('click', async (e) => {
                   e.preventDefault();

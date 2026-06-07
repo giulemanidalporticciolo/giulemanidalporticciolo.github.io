@@ -519,6 +519,12 @@ label[for="tab-pec"]::before {
     color: #000;
 }
 
+.footer-campaign a {
+  text-decoration: none;
+  border: 0;
+  color: #000;
+}
+
 .instagram {
     background-image: url("img/instagram.png");
 }

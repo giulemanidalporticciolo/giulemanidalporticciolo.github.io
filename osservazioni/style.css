@@ -423,6 +423,7 @@ label[for="tab-pec"]::before {
 
 .step-details {
     list-style: none;
+    display: inline-block;
 
     margin-top: 0px;
     margin-bottom: 0px;
@@ -439,9 +440,6 @@ label[for="tab-pec"]::before {
 .step-details li:last-child {
     margin-bottom: 0;
 }
-.step-details {
-    display: inline-block;
-}
 
 .deadline-box {
     display: inline-block;
@@ -455,7 +453,6 @@ label[for="tab-pec"]::before {
 
     color: #b54708;
 }
-
 
 
 .share-buttons a {

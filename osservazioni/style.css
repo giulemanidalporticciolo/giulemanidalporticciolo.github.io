@@ -85,7 +85,7 @@ strong {
 
 /* LINKS */
 
-a {
+main a {
     color: #1e5aa8;
     font-weight: 500;
     overflow-wrap: anywhere;
@@ -460,7 +460,7 @@ label[for="tab-pec"]::before {
 
 .site-footer {
     margin-top: 60px;
-    margin-bottom: 32px;
+    margin-bottom: 60px;
 
     display: flex;
     flex-wrap: wrap;

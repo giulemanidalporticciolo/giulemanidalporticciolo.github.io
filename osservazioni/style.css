@@ -445,6 +445,7 @@ label[for="tab-pec"]::before {
     display: inline-block;
 
     margin: 0 0 32px;
+    margin-top: 10px;
     padding: 12px 16px;
 
     background: #fff1eb;

@@ -14,7 +14,7 @@
     <meta property="og:image" content="https://giulemanidalporticciolo.github.io/osservazioni/img/osservazioni.jpg">
 
 
-    <link rel="stylesheet" href="style.css?v=202605312036">
+    <link rel="stylesheet" href="style.css?v=202605312037">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -259,6 +259,104 @@
           <p><strong>Difendi il porticciolo. Fai sentire la tua voce.</strong></p>
 
         </section>
+
+
+        <section class="share">
+
+          <h2>Condividi</h2>
+
+
+          <div class="share-buttons">
+
+              <a href="https://wa.me/?text=https://tr.ee/osservazioni"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                  <img src="img/share/whatsapp.png"
+                       alt="Condividi su WhatsApp"
+                       width="32"
+                       height="32">
+              </a>
+
+              <a href="https://www.facebook.com/sharer/sharer.php?u=https://tr.ee/osservazioni"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                  <img src="img/share/facebook.png"
+                       alt="Condividi su Facebook"
+                       width="32"
+                       height="32">
+              </a>
+
+              <a href="https://t.me/share/url?url=https://tr.ee/osservazioni"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                  <img src="img/share/telegram.png"
+                       alt="Condividi su Telegram"
+                       width="32"
+                       height="32">
+              </a>
+
+              <a href="#"
+                 id="copy-link">
+                  <img src="img/share/copy.png"
+                       alt="Copia link"
+                       width="32"
+                       height="32">
+              </a>
+
+              <a href="#"
+                 id="native-share"
+                 hidden>
+                  <img src="img/share/share.png"
+                       alt="Altre opzioni di condivisione"
+                       width="32"
+                       height="32">
+              </a>
+
+          </div>
+
+          <script>
+          document.addEventListener('DOMContentLoaded', () => {
+
+              const pageUrl = location.href;
+
+              const copyLinkBtn = document.getElementById('copy-link');
+
+              copyLinkBtn.addEventListener('click', async (e) => {
+                  e.preventDefault();
+
+                  try {
+                      await navigator.clipboard.writeText(pageUrl);
+                      alert('Link copiato');
+                  } catch {
+                      alert('Impossibile copiare il link');
+                  }
+              });
+
+              const shareBtn = document.getElementById('native-share');
+
+              if (navigator.share) {
+                  shareBtn.hidden = false;
+
+                  shareBtn.addEventListener('click', async (e) => {
+                      e.preventDefault();
+
+                      try {
+                          await navigator.share({
+                              title: document.title,
+                              url: pageUrl
+                          });
+                      } catch (_) {
+                          // utente ha annullato
+                      }
+                  });
+              }
+          });
+          </script>
+
+
+        </section>
+
+
 
     </main>
 

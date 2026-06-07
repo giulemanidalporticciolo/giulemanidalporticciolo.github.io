@@ -304,6 +304,12 @@ label[for="tab-pec"]::before {
 
 .links-list li {
   list-style: none;
+  margin-bottom: 12px;
+}
+
+.links-list li::before {
+  content: "🔗";
+  margin-right: 0.1em;
 }
 
 .link-description {

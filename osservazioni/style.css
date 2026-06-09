@@ -444,8 +444,9 @@ label[for="tab-pec"]::before {
 .deadline-box {
     display: inline-block;
 
-    margin: 0 0 32px;
+    margin: 0;
     margin-top: 10px;
+    margin-bottom: 28px;
     padding: 12px 16px;
 
     background: #fff1eb;
@@ -453,6 +454,10 @@ label[for="tab-pec"]::before {
     border-radius: 12px;
 
     color: #b54708;
+}
+
+.intro {
+  margin-bottom: 30px;
 }
 
 

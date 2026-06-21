@@ -389,10 +389,20 @@ label[for="tab-pec"]::before {
 }
 
 .step-info {
+  position: relative;
   font-size: 0.8em;
   padding-left: 28px;
-  background: url("img/info.png") no-repeat left center;
-  background-size: 24px 24px;
+}
+
+.step-info::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  background: url("img/info.png") no-repeat center;
+  background-size: contain;
 }
 
 .step-details {

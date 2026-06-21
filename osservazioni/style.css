@@ -391,7 +391,6 @@ label[for="tab-pec"]::before {
 .step-info {
   position: relative;
   font-size: 0.8em;
-  padding-left: 28px;
 }
 
 .step-info::before {
@@ -401,7 +400,6 @@ label[for="tab-pec"]::before {
   top: 0;
   width: 24px;
   height: 24px;
-  background: url("img/info.png") no-repeat center;
   background-size: contain;
 }
 

@@ -391,6 +391,7 @@ label[for="tab-pec"]::before {
 .step-info {
   position: relative;
   font-size: 0.8em;
+  color: #666;
 }
 
 .step-info::before {

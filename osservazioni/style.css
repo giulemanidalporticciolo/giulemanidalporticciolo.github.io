@@ -388,10 +388,15 @@ label[for="tab-pec"]::before {
     font-size: 0.75em;
 }
 
+.step-info {
+  font-size: 0.8em;
+  padding-left: 28px;
+  background: url("img/info.png") no-repeat left center;
+  background-size: 24px 24px;
+}
+
 .step-details {
     font-size: 1rem;
-    font-size: 1em;
-
 }
 .step-details {
     list-style: none;

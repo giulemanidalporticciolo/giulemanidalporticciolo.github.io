@@ -388,7 +388,7 @@ label[for="tab-pec"]::before {
     font-size: 0.75em;
 }
 
-.step-5 > p:first-of-type {
+.step > p:first-of-type {
   margin-bottom: 6px;
 }
 
@@ -447,10 +447,10 @@ label[for="tab-pec"]::before {
     color: #666;
 }
 
-.step-details .field-value {
+.field-value {
     font-size: 1em;
 }
-.step-details .field-code {
+.field-code {
   font-family: ui-monospace, monospace;
   font-size: .9em;
 }

@@ -394,7 +394,7 @@ label[for="tab-pec"]::before {
 
 .step-info {
   position: relative;
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: #666;
 }
 
@@ -417,7 +417,7 @@ label[for="tab-pec"]::before {
 
 .step-info-list li {
   list-style: none;
-  font-size: 1rem;
+  font-size: 0.95rem;
   margin-bottom: 6px;
 }
 
@@ -447,12 +447,12 @@ label[for="tab-pec"]::before {
 }
 
 .field-value {
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: #000;
 }
 .field-code {
   font-family: ui-monospace, monospace;
-  font-size: .9rem;
+  font-size: 0.85rem;
   color: #000;
 }
 

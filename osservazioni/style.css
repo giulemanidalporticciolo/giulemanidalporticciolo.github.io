@@ -388,6 +388,10 @@ label[for="tab-pec"]::before {
     font-size: 0.75em;
 }
 
+.step-5 > p:first-of-type {
+  margin-bottom: 6px;
+}
+
 .step-info {
   position: relative;
   font-size: 0.8em;

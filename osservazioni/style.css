@@ -449,10 +449,12 @@ label[for="tab-pec"]::before {
 
 .field-value {
     font-size: 1em;
+    color: #000;
 }
 .field-code {
   font-family: ui-monospace, monospace;
   font-size: .9em;
+  color: #000;
 }
 
 .step-details {

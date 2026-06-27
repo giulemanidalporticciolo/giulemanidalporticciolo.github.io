@@ -476,7 +476,7 @@ label[for="tab-pec"]::before {
     margin-bottom: 0;
 }
 
-.deadline-box {
+.info-box {
     display: inline-block;
 
     margin: 0;
@@ -484,11 +484,17 @@ label[for="tab-pec"]::before {
     margin-bottom: 28px;
     padding: 12px 16px;
 
-    background: #fff1eb;
-    border: 1px solid #f7b49a;
     border-radius: 12px;
 
-    color: #b54708;
+    background: #eff6ff;
+    border: 1px solid #93c5fd;
+    color: #1e5aa8;
+}
+
+.deadline-box {
+  background: #fff1eb;
+  border: 1px solid #f7b49a;
+  color: #b54708;
 }
 
 .intro {

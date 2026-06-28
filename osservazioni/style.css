@@ -491,6 +491,20 @@ label[for="tab-pec"]::before {
     color: #1e5aa8;
 }
 
+.info-box .social {
+  margin-top: 8px;
+}
+
+.info-box .social a {
+  text-decoration: none;
+  border: 0;
+  color: #000;
+}
+
+.info-box p {
+  margin-bottom: 0px;
+}
+
 .deadline-box {
   background: #fff1eb;
   border: 1px solid #f7b49a;
@@ -538,13 +552,13 @@ label[for="tab-pec"]::before {
     letter-spacing: .02em;
 }
 
-.footer-social {
+.social {
     display: flex;
     gap: 8px;
     margin: 0;
 }
 
-.footer-social a {
+.social a {
     width: 32px;
     height: 32px;
 
@@ -555,7 +569,7 @@ label[for="tab-pec"]::before {
     background-size: contain;
 }
 
-.footer-campaign {
+.committee-name {
     margin: 0;
 
     font-family: "Barlow Condensed", sans-serif;
@@ -566,7 +580,7 @@ label[for="tab-pec"]::before {
     color: #000;
 }
 
-.footer-campaign a {
+.committee-name a {
   text-decoration: none;
   border: 0;
   color: #000;

@@ -319,6 +319,11 @@ label[for="tab-pec"]::before {
   margin-bottom: 10px;
 }
 
+h4.links-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  margin-top: 26px;
+}
 
 .topics-grid {
     display: grid;

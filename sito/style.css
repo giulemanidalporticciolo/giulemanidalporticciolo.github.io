@@ -394,3 +394,25 @@ main a {
     border: 0;
     border-radius: 12px;
 }
+
+
+.photo {
+    width: 500px;
+    max-width: 100%;
+}
+
+.photo img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+}
+
+.photo-caption {
+    width: 500px;
+    max-width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+    margin: 8px 0 0;
+}

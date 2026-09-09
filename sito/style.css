@@ -200,6 +200,11 @@ main a {
         font-size: 1.5rem;
     }
 
+    .menu-button {
+        top: 24px;
+        right: 18px;
+    }
+
 }
 
 

@@ -1,147 +1,100 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+---
+layout: default
+title: Giù le mani dal Porticciolo
+description: Informazioni, documenti e iniziative per la tutela del Porticciolo di Pastena.
+---
 
-    <title>Giù le mani dal Porticciolo</title>
+<button class="menu-button" aria-label="Apri menu">
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
 
-    <meta name="description"
-          content="Il sito del Comitato Giù le mani dal Porticciolo. Informazioni, documenti e iniziative per la tutela del Porticciolo di Pastena.">
+<h1>Giù le mani dal Porticciolo</h1>
 
-    <meta property="og:title" content="Giù le Mani dal Porticciolo">
-    <meta property="og:description"
-          content="Informazioni, documenti e iniziative per la tutela del Porticciolo di Pastena.">
-    <meta property="og:type" content="website">
+<section class="intro">
 
-    <link rel="stylesheet" href="style.css?v=8">
+    <p>
+        Il Porticciolo di Pastena è un luogo storico e identitario
+        della nostra città.
+    </p>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow+Semi+Condensed:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-</head>
+    <p>
+        Oggi è al centro di un progetto che ne trasformerebbe
+        radicalmente l'aspetto e la funzione.
+    </p>
 
-<body>
+    <p>
+        Qui trovi informazioni sul progetto, documenti,
+        approfondimenti e tutte le iniziative del Comitato.
+    </p>
 
-    <button class="menu-button" aria-label="Apri menu">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-
-    <main>
-
-        <h1>Giù le mani dal Porticciolo</h1>
-
-        <section class="intro">
-
-            <p>
-                Il Porticciolo di Pastena è un luogo storico e identitario
-                della nostra città.
-            </p>
-
-            <p>
-                Oggi è al centro di un progetto che ne trasformerebbe
-                radicalmente l'aspetto e la funzione.
-            </p>
-
-            <p>
-                Qui trovi informazioni sul progetto, documenti,
-                approfondimenti e tutte le iniziative del Comitato.
-            </p>
-
-        </section>
+</section>
 
 
-        <section class="home-menu">
+<section class="home-menu">
 
-          <a class="menu-card" href="/progetto/">
-              <span class="menu-icon">📄</span>
-              <span class="menu-content">
-                  <strong>Il progetto del porto</strong>
-                  <small>Cosa prevede e quali trasformazioni comporterebbe</small>
-              </span>
-              <span class="menu-arrow">›</span>
-          </a>
+    <a class="menu-card" href="{{ '/progetto/' | relative_url }}">
+        <span class="menu-icon">📄</span>
+        <span class="menu-content">
+            <strong>Il progetto del porto</strong>
+            <small>Cosa prevede e quali trasformazioni comporterebbe</small>
+        </span>
+        <span class="menu-arrow">›</span>
+    </a>
 
-          <a class="menu-card" href="/porticciolo/">
-              <span class="menu-icon">🌊</span>
-              <span class="menu-content">
-                  <strong>Il Porticciolo</strong>
-                  <small>Storia, valore e caratteristiche del luogo</small>
-              </span>
-              <span class="menu-arrow">›</span>
-          </a>
+    <a class="menu-card" href="{{ '/porticciolo/' | relative_url }}">
+        <span class="menu-icon">🌊</span>
+        <span class="menu-content">
+            <strong>Il Porticciolo</strong>
+            <small>Storia, valore e caratteristiche del luogo</small>
+        </span>
+        <span class="menu-arrow">›</span>
+    </a>
 
-          <a class="menu-card" href="/documenti/">
-              <span class="menu-icon">📁</span>
-              <span class="menu-content">
-                  <strong>Documenti e atti</strong>
-                  <small>Studi, integrazioni, VIA e altri materiali</small>
-              </span>
-              <span class="menu-arrow">›</span>
-          </a>
+    <a class="menu-card" href="{{ '/documenti/' | relative_url }}">
+        <span class="menu-icon">📁</span>
+        <span class="menu-content">
+            <strong>Documenti e atti</strong>
+            <small>Studi, integrazioni, VIA e altri materiali</small>
+        </span>
+        <span class="menu-arrow">›</span>
+    </a>
 
-          <a class="menu-card" href="/partecipa/">
-              <span class="menu-icon">👥</span>
-              <span class="menu-content">
-                  <strong>Partecipa</strong>
-                  <small>Scopri come sostenere il Comitato e partecipare alle iniziative</small>
-              </span>
-              <span class="menu-arrow">›</span>
-          </a>
+    <a class="menu-card" href="{{ '/partecipa/' | relative_url }}">
+        <span class="menu-icon">👥</span>
+        <span class="menu-content">
+            <strong>Partecipa</strong>
+            <small>Scopri come sostenere il Comitato e partecipare alle iniziative</small>
+        </span>
+        <span class="menu-arrow">›</span>
+    </a>
 
-        </section>
-
-
-        <section>
-
-            <h2>Seguici</h2>
-
-            <ul class="links-list">
-
-                <li>
-                    <a href="https://www.instagram.com/giulemanidalporticciolo"
-                       target="_blank"
-                       rel="noopener">
-                        Instagram
-                    </a>
-                </li>
-
-                <li>
-                    <a href="https://www.facebook.com/giulemanidalporticciolo"
-                       target="_blank"
-                       rel="noopener">
-                        Facebook
-                    </a>
-                </li>
-
-            </ul>
-
-        </section>
-
-    </main>
+</section>
 
 
-    <footer class="site-footer">
+<section>
 
-      <!--
-      <p class="footer-slogan">
-        INFORMATI. PARTECIPA. FAI SENTIRE LA TUA VOCE.
-      </p>
-    -->
+    <h2>Seguici</h2>
 
-      <p class="social">
-          <a class="instagram" target="_blank" rel="noopener" href="https://www.instagram.com/giulemanidalporticciolo"></a>
-          <a class="facebook" target="_blank" rel="noopener" href="https://www.facebook.com/giulemanidalporticciolo"></a>
-          <a class="youtube" target="_blank" rel="noopener" href="https://www.youtube.com/@giulemanidalporticciolodip1163"></a>
-      </p>
+    <ul class="links-list">
 
-      <p class="committee-name">
-          <a href="https://linktr.ee/giulemanidalporticciolo" target="_blank">GIÙ LE MANI DAL PORTICCIOLO</a>
-      </p>
+        <li>
+            <a href="https://www.instagram.com/giulemanidalporticciolo"
+               target="_blank"
+               rel="noopener">
+                Instagram
+            </a>
+        </li>
 
-    </footer>
+        <li>
+            <a href="https://www.facebook.com/giulemanidalporticciolo"
+               target="_blank"
+               rel="noopener">
+                Facebook
+            </a>
+        </li>
 
-</body>
-</html>
+    </ul>
+
+</section>

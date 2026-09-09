@@ -602,3 +602,98 @@ h4.links-title {
 .youtube {
     background-image: url("img/youtube.png");
 }
+
+
+
+/* HEADER */
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    color: #000;
+    text-decoration: none;
+    border: 0;
+}
+
+.brand img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
+
+.brand-name {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: .9;
+}
+
+.brand-subtitle {
+    margin-top: 6px;
+    color: #666;
+    font-size: .8rem;
+    line-height: 1.2;
+}
+
+/* MENU */
+
+.menu-button {
+    width: 44px;
+    height: 44px;
+
+    padding: 8px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.menu-button span {
+    display: block;
+
+    width: 26px;
+    height: 3px;
+
+    background: #000;
+    border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+
+    .site-header {
+        margin-bottom: 30px;
+    }
+
+    .brand img {
+        width: 54px;
+        height: 54px;
+    }
+
+    .brand-name {
+        font-size: 1.5rem;
+    }
+
+    .brand-subtitle {
+        font-size: .7rem;
+    }
+
+    .menu-button {
+        width: 40px;
+        height: 40px;
+    }
+}

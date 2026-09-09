@@ -19,6 +19,30 @@ body {
 }
 
 
+/* HEADER */
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 30px 0;
+}
+
+.site-logo {
+    color: #000;
+    text-decoration: none;
+    border: 0;
+
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: .02em;
+}
+
+
 /* LAYOUT */
 
 main,
@@ -122,11 +146,11 @@ main a {
 }
 
 
-/* MENU */
+/* MENU HAMBURGER */
 
 .menu-button {
     position: absolute;
-    top: 45px;
+    top: 25px;
     right: 30px;
 
     width: 44px;
@@ -157,60 +181,6 @@ main a {
 
 
 /* FOOTER */
-
-.site-footer {
-    margin-top: 60px;
-    margin-bottom: 48px;
-
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-}
-
-.committee-name {
-    margin: 0;
-
-    font-family: "Barlow Condensed", sans-serif;
-    font-size: 1.2rem;
-
-    letter-spacing: .04em;
-    text-transform: uppercase;
-    color: #000;
-}
-
-
-/* MOBILE */
-
-@media (max-width: 768px) {
-
-    main,
-    footer {
-        padding: 25px 20px 50px;
-        padding-bottom: 0;
-    }
-
-    p,
-    li {
-        font-size: 1.15rem;
-    }
-
-    h3 {
-        font-size: 1.5rem;
-    }
-
-    .menu-button {
-        top: 24px;
-        right: 18px;
-    }
-
-}
-
-
-
-
-
 
 .site-footer {
     margin-top: 60px;
@@ -266,9 +236,9 @@ main a {
 }
 
 .committee-name a {
-  text-decoration: none;
-  border: 0;
-  color: #000;
+    text-decoration: none;
+    border: 0;
+    color: #000;
 }
 
 .instagram {
@@ -282,7 +252,6 @@ main a {
 .youtube {
     background-image: url("img/youtube.png");
 }
-
 
 
 /* HOME MENU */
@@ -358,27 +327,38 @@ main a {
     line-height: 1;
 }
 
-.menu-blue {
-    background: #eef5fc;
-}
 
-.menu-green {
-    background: #eef7f3;
-}
-
-.menu-yellow {
-    background: #faf5ed;
-}
-
-.menu-pink {
-    background: #f9eeee;
-}
-
-.menu-gray {
-    background: #f4f5f6;
-}
+/* MOBILE */
 
 @media (max-width: 768px) {
+
+    .site-header {
+        padding: 18px 20px 0;
+    }
+
+    .site-logo {
+        font-size: 1.25rem;
+    }
+
+    main,
+    footer {
+        padding: 25px 20px 50px;
+        padding-bottom: 0;
+    }
+
+    p,
+    li {
+        font-size: 1.15rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    .menu-button {
+        top: 14px;
+        right: 18px;
+    }
 
     .home-menu {
         margin-top: 32px;

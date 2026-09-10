@@ -3,3 +3,9 @@ _site/
 .jekyll-cache/
 .jekyll-metadata
 .bundle/
+
+# Node / export
+node_modules/
+package.json
+package-lock.json
+export.js

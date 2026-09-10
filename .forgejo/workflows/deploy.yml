@@ -8,6 +8,11 @@ jobs:
     container:
       image: ruby:3.2
     steps:
+      - name: Installa Node.js
+        run: |
+          apt-get update
+          apt-get install -y nodejs
+
       - uses: actions/checkout@v4
 
       - name: Build con Jekyll

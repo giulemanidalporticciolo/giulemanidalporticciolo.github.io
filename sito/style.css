@@ -560,8 +560,12 @@ main a {
 }
 
 .faq-item p {
-    margin: 0;
+    margin: 0 0 15px;
     max-width: 900px;
+}
+
+.faq-item p:last-child {
+    margin-bottom: 0;
 }
 
 @media (max-width: 768px) {

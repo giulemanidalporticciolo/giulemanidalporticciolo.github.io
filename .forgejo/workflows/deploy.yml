@@ -15,9 +15,16 @@ jobs:
 
       - uses: actions/checkout@v4
 
+      - name: Cache gem
+        uses: actions/cache@v4
+        with:
+          path: vendor/bundle
+          key: gems-${{ hashFiles('Gemfile.lock') }}
+
       - name: Build con Jekyll
         run: |
           gem install bundler jekyll
+          bundle config set --local path 'vendor/bundle'
           bundle install || true
           bundle exec jekyll build || jekyll build
 

@@ -69,23 +69,58 @@ body {
     border-radius: 12px;
 }
 
+/* Footer */
 .panel-footer {
-    margin-top: 15mm;
+    margin-top: 10mm;
 }
 
-.panel-footer > img {
+.footer-top {
+    display: flex;
+    align-items: center;
+    gap: 5mm;
+}
+
+.footer-top > img {
     width: 32mm;
     height: 32mm;
+    flex-shrink: 0;
 }
 
 .social-icons {
     display: flex;
-    gap: 10mm;
+    gap: 4mm;
 }
 
 .social-icons img {
-    width: 16mm;
-    height: 16mm;
+    width: 12mm;
+    height: 12mm;
+}
+
+.panel-footer p {
+    font-size: 21pt;
+    line-height: 1.2;
+    margin-top: 3mm;
+    text-align: center;
+}
+
+/* QR progetto */
+.project-link {
+    display: flex;
+    align-items: center;
+    gap: 7mm;
+    margin-top: 10mm;
+}
+
+.project-link img {
+    width: 28mm;
+    height: 28mm;
+    flex-shrink: 0;
+}
+
+.project-link span {
+    font-size: 15pt;
+    line-height: 1.25;
+    max-width: 40mm;
 }
 
 @media print {
@@ -112,24 +147,4 @@ body {
     .panel {
         border: none;
     }
-}
-
-
-.project-link {
-    display: flex;
-    align-items: center;
-    gap: 7mm;
-    margin-top: 10mm;
-}
-
-.project-link img {
-    width: 28mm;
-    height: 28mm;
-    flex-shrink: 0;
-}
-
-.project-link span {
-    font-size: 15pt;
-    line-height: 1.25;
-    max-width: 38mm;
 }

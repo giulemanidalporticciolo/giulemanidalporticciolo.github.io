@@ -46,8 +46,7 @@ cp -r _site/* .
 rm -rf _site
 
 echo "==> Commit e push"
-git add -A
-git reset -- deploy.sh 2>/dev/null || true
+git add -A -- . ':!deploy.sh'
 git commit -m "deploy: build locale $(date '+%Y-%m-%d %H:%M:%S')" || echo "Nulla di nuovo da pubblicare"
 git push origin "$DEPLOY_BRANCH" --force
 

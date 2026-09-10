@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+SCRIPT_NAME=$(basename "$0")
 SOURCE_BRANCH="main"
 DEPLOY_BRANCH="pages"
 
@@ -39,14 +40,14 @@ else
 fi
 
 echo "==> Pulisco il branch $DEPLOY_BRANCH (tranne .git e _site)"
-find . -maxdepth 1 ! -name '.git' ! -name '_site' ! -name 'deploy.sh' ! -name '.' -exec rm -rf {} +
+find . -maxdepth 1 ! -name '.git' ! -name '_site' ! -name "$SCRIPT_NAME" ! -name '.' -exec rm -rf {} +
 
 echo "==> Copio l'output della build"
 cp -r _site/* .
 rm -rf _site
 
 echo "==> Commit e push"
-git add -A -- . ':!deploy.sh'
+git add -A -- . ":!$SCRIPT_NAME"
 git commit -m "deploy: build locale $(date '+%Y-%m-%d %H:%M:%S')" || echo "Nulla di nuovo da pubblicare"
 git push origin "$DEPLOY_BRANCH" --force
 

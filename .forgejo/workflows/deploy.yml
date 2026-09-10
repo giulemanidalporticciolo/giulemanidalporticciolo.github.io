@@ -1,0 +1,24 @@
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: codeberg-tiny-lazy
+    container:
+      image: ruby:3.2
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build con Jekyll
+        run: |
+          gem install bundler jekyll
+          bundle install || true
+          bundle exec jekyll build || jekyll build
+
+      - name: Pubblica su Codeberg Pages
+        uses: https://codeberg.org/git-pages/action@v2
+        with:
+          site: https://${{ forge.repository_owner }}.codeberg.page/
+          token: ${{ forge.token }}
+          source: _site/

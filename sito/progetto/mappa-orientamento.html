@@ -119,10 +119,15 @@ markers.forEach(marker => {
 
         info.classList.add("visible");
 
-        info.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-      });
+        setTimeout(() => {
+            const offset = 40;
+            const top = info.getBoundingClientRect().top + window.scrollY - offset;
+
+            window.scrollTo({
+                top: top,
+                behavior: "smooth"
+            });
+        }, 50);
     });
 });
 </script>

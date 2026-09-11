@@ -42,6 +42,10 @@ extra_css: sito/progetto/mappa-orientamento.css
             <span></span>
         </button>
 
+        <button class="map-marker marker-spiaggetta" aria-label="Spiaggetta del Porticciolo" data-place="spiaggetta">
+            <span></span>
+        </button>
+
     </div>
 
     <div class="map-info" id="map-info">
@@ -86,6 +90,12 @@ const places = {
         title: "Piazzetta del Porticciolo",
         image: basePath + "piazzetta-porticciolo.jpg",
         description: "La Piazzetta del Porticciolo è uno degli spazi direttamente interessati dalla trasformazione prevista dal progetto."
+    },
+
+    spiaggetta: {
+        title: "Spiaggetta del Porticciolo",
+        image: basePath + "spiaggetta-porticciolo.jpg",
+        description: "La Spiaggetta del Porticciolo è uno degli spazi direttamente interessati dalla trasformazione prevista dal progetto."
     }
 };
 
@@ -108,6 +118,11 @@ markers.forEach(marker => {
         infoDescription.textContent = place.description;
 
         info.classList.add("visible");
+
+        info.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+      });
     });
 });
 </script>

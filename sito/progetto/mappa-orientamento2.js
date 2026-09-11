@@ -55,13 +55,18 @@ const places = {
 
 let offsetX = 0;
 
+let activePointers = 0;
 let dragging = false;
 
 let dragStartX = 0;
 let startOffsetX = 0;
 
+let multiTouchDetected = false;
+
 let mapHasScrolled = false;
 
+
+/* LIMITI DEL PAN */
 
 function getLimits() {
 
@@ -69,6 +74,7 @@ function getLimits() {
     const canvasWidth = canvas.offsetWidth;
 
     const maxLeft = 0;
+
     const maxRight = Math.min(
         0,
         containerWidth - canvasWidth
@@ -81,6 +87,8 @@ function getLimits() {
 
 }
 
+
+/* POSIZIONE DELLA MAPPA */
 
 function setOffset(newOffset) {
 
@@ -97,6 +105,8 @@ function setOffset(newOffset) {
 }
 
 
+/* RESET */
+
 function resetMap() {
 
     setOffset(0);
@@ -104,30 +114,81 @@ function resetMap() {
 }
 
 
+/* PAN CON POINTER EVENTS */
+
 container.addEventListener("pointerdown", event => {
 
     if (event.target.closest(".map-marker")) {
         return;
     }
 
+
+    activePointers++;
+
+
+    /*
+     * Se vengono rilevati due puntatori,
+     * blocchiamo completamente il pan.
+     */
+
+    if (activePointers > 1) {
+
+        dragging = false;
+        multiTouchDetected = true;
+
+        return;
+
+    }
+
+
+    /*
+     * Se un secondo dito è stato già rilevato,
+     * non permettiamo di ricominciare il pan
+     * finché tutti i puntatori non sono stati rimossi.
+     */
+
+    if (multiTouchDetected) {
+
+        dragging = false;
+
+        return;
+
+    }
+
+
     dragging = true;
 
     dragStartX = event.clientX;
+
     startOffsetX = offsetX;
 
-    container.setPointerCapture(event.pointerId);
+
+    container.setPointerCapture(
+        event.pointerId
+    );
 
 });
 
 
 container.addEventListener("pointermove", event => {
 
-    if (!dragging) {
+    /*
+     * Con due dita/puntatori:
+     * nessun movimento.
+     */
+
+    if (
+        activePointers !== 1 ||
+        !dragging ||
+        multiTouchDetected
+    ) {
         return;
     }
 
+
     const movement =
         event.clientX - dragStartX;
+
 
     setOffset(
         startOffsetX + movement
@@ -136,11 +197,22 @@ container.addEventListener("pointermove", event => {
 });
 
 
-container.addEventListener("pointerup", event => {
+function endPointer(event) {
+
+    activePointers = Math.max(
+        0,
+        activePointers - 1
+    );
+
 
     dragging = false;
 
-    if (container.hasPointerCapture(event.pointerId)) {
+
+    if (
+        container.hasPointerCapture(
+            event.pointerId
+        )
+    ) {
 
         container.releasePointerCapture(
             event.pointerId
@@ -148,15 +220,34 @@ container.addEventListener("pointerup", event => {
 
     }
 
-});
+
+    /*
+     * Quando tutte le dita sono state tolte,
+     * permettiamo un nuovo pan con un solo dito.
+     */
+
+    if (activePointers === 0) {
+
+        multiTouchDetected = false;
+
+    }
+
+}
 
 
-container.addEventListener("pointercancel", () => {
+container.addEventListener(
+    "pointerup",
+    endPointer
+);
 
-    dragging = false;
 
-});
+container.addEventListener(
+    "pointercancel",
+    endPointer
+);
 
+
+/* RIDIMENSIONAMENTO */
 
 window.addEventListener("resize", () => {
 
@@ -165,37 +256,58 @@ window.addEventListener("resize", () => {
 });
 
 
+/* MARKER */
+
 markers.forEach(marker => {
 
     marker.addEventListener("click", event => {
 
         event.stopPropagation();
 
+
         const place =
             places[marker.dataset.place];
+
 
         if (!place) {
             return;
         }
 
+
         markers.forEach(item => {
+
             item.classList.remove("active");
+
         });
+
 
         marker.classList.add("active");
 
-        infoImage.src = place.image;
-        infoImage.alt = place.title;
 
-        infoTitle.textContent = place.title;
-        infoDescription.textContent = place.description;
+        infoImage.src =
+            place.image;
+
+        infoImage.alt =
+            place.title;
+
+        infoTitle.textContent =
+            place.title;
+
+        infoDescription.textContent =
+            place.description;
+
 
         info.classList.add("visible");
 
 
+        /*
+         * Scroll automatico solo al primo click.
+         */
+
         if (!mapHasScrolled) {
 
             mapHasScrolled = true;
+
 
             setTimeout(() => {
 
@@ -203,9 +315,13 @@ markers.forEach(marker => {
                     info.getBoundingClientRect().top +
                     window.scrollY;
 
+
                 window.scrollTo({
+
                     top: infoTop - 30,
+
                     behavior: "smooth"
+
                 });
 
             }, 50);
@@ -217,15 +333,22 @@ markers.forEach(marker => {
 });
 
 
+/* CHIUDI POPUP */
+
 infoClose.addEventListener("click", () => {
 
     info.classList.remove("visible");
 
+
     markers.forEach(marker => {
+
         marker.classList.remove("active");
+
     });
 
 });
 
+
+/* POSIZIONE INIZIALE */
 
 resetMap();

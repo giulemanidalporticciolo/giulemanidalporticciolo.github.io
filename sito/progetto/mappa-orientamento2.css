@@ -2,17 +2,23 @@
     position: relative;
     width: 900px;
     max-width: 100%;
+    height: auto;
     margin: 40px 0 20px;
     background: #080d3d;
     border-radius: 12px;
     overflow: hidden;
-    touch-action: none;
+    touch-action: pan-x;
+    cursor: grab;
+}
+
+.map-container:active {
+    cursor: grabbing;
 }
 
 .map-canvas {
     position: relative;
     width: 100%;
-    transform-origin: 0 0;
+    transform: translateX(0);
     will-change: transform;
 }
 
@@ -24,6 +30,7 @@
     -webkit-user-drag: none;
     pointer-events: none;
 }
+
 
 .map-marker {
     position: absolute;
@@ -76,6 +83,7 @@
 }
 
 @keyframes marker-pulse {
+
     0% {
         box-shadow: 0 0 0 0 rgba(30, 90, 168, 0.5);
     }
@@ -87,7 +95,9 @@
     100% {
         box-shadow: 0 0 0 0 rgba(30, 90, 168, 0);
     }
+
 }
+
 
 .marker-isoletta {
     left: 21%;
@@ -119,33 +129,8 @@
     top: 34%;
 }
 
-.map-controls {
-    position: absolute;
-    right: 15px;
-    bottom: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    z-index: 40;
-}
 
-.map-controls button {
-    width: 38px;
-    height: 38px;
-    padding: 0;
-    border: 0;
-    border-radius: 6px;
-    background: #fff;
-    color: #000;
-    font-size: 1.5rem;
-    line-height: 1;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.map-controls button:hover {
-    background: #f2f2f2;
-}
+/* POPUP */
 
 .map-info {
     display: none;
@@ -199,6 +184,9 @@
     cursor: pointer;
 }
 
+
+/* MOBILE */
+
 @media (max-width: 768px) {
 
     .map-container {
@@ -248,8 +236,4 @@
         right: 0;
     }
 
-    .map-controls {
-        right: 10px;
-        bottom: 10px;
-    }
 }

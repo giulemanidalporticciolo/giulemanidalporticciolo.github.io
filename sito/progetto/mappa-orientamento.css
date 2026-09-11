@@ -24,7 +24,6 @@
     background: transparent;
     cursor: pointer;
     transform: translate(-50%, -50%);
-    animation: marker-pulse 2s infinite;
 }
 
 .map-marker::before {
@@ -38,6 +37,29 @@
     border: 2px solid #fff;
     border-radius: 50%;
     background: #1e5aa8;
+    z-index: 2;
+}
+
+.map-marker::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 13px;
+    height: 13px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(30, 90, 168, 0.5);
+    animation: marker-pulse 2s infinite;
+    z-index: 1;
+}
+
+.map-marker.active::after {
+    opacity: 0;
+}
+
+.map-marker.active::before {
+    background: #000;
 }
 
 @keyframes marker-pulse {
@@ -56,10 +78,6 @@
 
 .map-marker span {
     display: block;
-}
-
-.map-marker.active::before {
-    background: #000;
 }
 
 .marker-isoletta {
@@ -126,7 +144,8 @@
         height: 36px;
     }
 
-    .map-marker::before {
+    .map-marker::before,
+    .map-marker::after {
         width: 13px;
         height: 13px;
     }

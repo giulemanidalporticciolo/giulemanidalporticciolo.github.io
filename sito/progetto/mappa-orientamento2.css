@@ -2,24 +2,23 @@
     position: relative;
     width: 900px;
     max-width: 100%;
-    height: auto;
     margin: 40px 0 20px;
     background: #080d3d;
     border-radius: 12px;
-    overflow: hidden;
-    touch-action: pan-y;
-    cursor: grab;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
 }
 
-.map-container:active {
-    cursor: grabbing;
+.map-container::-webkit-scrollbar {
+    display: none;
 }
 
 .map-canvas {
     position: relative;
     width: 100%;
-    transform: translateX(0);
-    will-change: transform;
+    min-width: 100%;
 }
 
 .map-canvas > img {
@@ -201,6 +200,7 @@
 
     .map-canvas {
         width: 180%;
+        min-width: 180%;
     }
 
     .map-marker {

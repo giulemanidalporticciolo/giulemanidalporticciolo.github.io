@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Mappa di orientamento – Giù le mani dal Porticciolo
-description: Il progetto visto in relazione ai luoghi e ai punti di riferimento più conosciuti della zona.
-extra_css: mappa-orientamento2.css
+description: Il progetto in relazione ai luoghi che conosciamo.
+extra_css: sito/progetto/mappa-orientamento2.css
 ---
 
 <section class="page-intro">
@@ -14,76 +14,79 @@ extra_css: mappa-orientamento2.css
     </p>
 </section>
 
-<section class="orientation-map">
+<section>
+    <div class="map-container" id="map-container">
 
-    <div class="map-wrapper">
+        <div class="map-canvas" id="map-canvas">
 
-        <div class="map-viewport" id="map-viewport">
+            <img
+                src="{{ 'sito/img/progetto/mappa-orientamento.png' | relative_url }}"
+                alt="Mappa di orientamento del progetto con i principali punti di riferimento della zona"
+            >
 
-            <div class="map-canvas" id="map-canvas">
+            <button class="map-marker marker-isoletta"
+                    aria-label="Bar Isoletta"
+                    data-place="isoletta">
+                <span></span>
+            </button>
 
-                <img
-                    src="{{ 'sito/img/progetto/mappa-orientamento.png' | relative_url }}"
-                    alt="Mappa di orientamento del progetto e dei principali punti di riferimento della zona"
-                >
+            <button class="map-marker marker-waqas"
+                    aria-label="Waqas Kebab"
+                    data-place="waqas">
+                <span></span>
+            </button>
 
-                <button class="map-marker marker-isoletta"
-                        aria-label="Bar Isoletta"
-                        data-place="isoletta">
-                    <span></span>
-                </button>
+            <button class="map-marker marker-hotel"
+                    aria-label="Hotel Polo Nautico"
+                    data-place="hotel">
+                <span></span>
+            </button>
 
-                <button class="map-marker marker-waqas"
-                        aria-label="Waqas Kebab"
-                        data-place="waqas">
-                    <span></span>
-                </button>
+            <button class="map-marker marker-quo-vadis"
+                    aria-label="Pizzeria Quo Vadis"
+                    data-place="quo-vadis">
+                <span></span>
+            </button>
 
-                <button class="map-marker marker-hotel"
-                        aria-label="Hotel Polo Nautico"
-                        data-place="hotel">
-                    <span></span>
-                </button>
+            <button class="map-marker marker-piazzetta"
+                    aria-label="Piazzetta del Porticciolo"
+                    data-place="piazzetta">
+                <span></span>
+            </button>
 
-                <button class="map-marker marker-quo-vadis"
-                        aria-label="Pizzeria Quo Vadis"
-                        data-place="quo-vadis">
-                    <span></span>
-                </button>
+            <button class="map-marker marker-spiaggetta"
+                    aria-label="Spiaggetta del Porticciolo"
+                    data-place="spiaggetta">
+                <span></span>
+            </button>
 
-                <button class="map-marker marker-piazzetta"
-                        aria-label="Piazzetta del Porticciolo"
-                        data-place="piazzetta">
-                    <span></span>
-                </button>
+        </div>
 
-            </div>
+        <div class="map-popup" id="map-popup">
 
-            <div class="map-popup" id="map-popup">
+            <button
+                class="map-popup-close"
+                id="map-popup-close"
+                aria-label="Chiudi">
+                ×
+            </button>
 
-                <button class="map-popup-close" id="map-popup-close" aria-label="Chiudi">
-                    ×
-                </button>
+            <img id="map-popup-image" src="" alt="">
 
-                <img id="map-popup-image" src="" alt="">
-
-                <div class="map-popup-content">
-                    <h2 id="map-popup-title"></h2>
-                    <p id="map-popup-description"></p>
-                </div>
-
+            <div class="map-popup-content">
+                <h2 id="map-popup-title"></h2>
+                <p id="map-popup-description"></p>
             </div>
 
         </div>
 
         <div class="map-controls">
-            <button type="button" id="zoom-in" aria-label="Ingrandisci la mappa">+</button>
-            <button type="button" id="zoom-out" aria-label="Riduci la mappa">−</button>
-            <button type="button" id="zoom-reset" aria-label="Ripristina la mappa">↺</button>
+            <button type="button" id="zoom-in" aria-label="Ingrandisci">+</button>
+            <button type="button" id="zoom-out" aria-label="Riduci">−</button>
+            <button type="button" id="zoom-reset" aria-label="Ripristina">↺</button>
         </div>
 
     </div>
-
 </section>
 
 <script>
@@ -118,10 +121,16 @@ const places = {
         title: "Piazzetta del Porticciolo",
         image: basePath + "piazzetta-porticciolo.jpg",
         description: "La Piazzetta del Porticciolo è uno degli spazi direttamente interessati dalla trasformazione prevista dal progetto."
+    },
+
+    spiaggetta: {
+        title: "Spiaggetta del Porticciolo",
+        image: basePath + "spiaggetta-porticciolo.jpg",
+        description: "La Spiaggetta del Porticciolo è uno degli spazi direttamente interessati dalla trasformazione prevista dal progetto."
     }
 };
 
-const viewport = document.getElementById("map-viewport");
+const container = document.getElementById("map-container");
 const canvas = document.getElementById("map-canvas");
 
 const popup = document.getElementById("map-popup");
@@ -130,43 +139,48 @@ const popupTitle = document.getElementById("map-popup-title");
 const popupDescription = document.getElementById("map-popup-description");
 const popupClose = document.getElementById("map-popup-close");
 
+const markers = document.querySelectorAll(".map-marker");
+
 const zoomIn = document.getElementById("zoom-in");
 const zoomOut = document.getElementById("zoom-out");
 const zoomReset = document.getElementById("zoom-reset");
 
 let scale = 1;
-let translateX = 0;
-let translateY = 0;
+let offsetX = 0;
+let offsetY = 0;
 
-let isDragging = false;
-let startX = 0;
-let startY = 0;
-let startTranslateX = 0;
-let startTranslateY = 0;
+let dragging = false;
+let dragStartX = 0;
+let dragStartY = 0;
+let startOffsetX = 0;
+let startOffsetY = 0;
 
-let lastTouchDistance = null;
+let pinchDistance = null;
 
-const MIN_ZOOM = 1;
-const MAX_ZOOM = 3;
+const MIN_SCALE = 1;
+const MAX_SCALE = 3;
 
 function updateMap() {
     canvas.style.transform =
-        `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
 }
 
-function setZoom(newScale, centerX, centerY) {
+function zoomTo(newScale, clientX, clientY) {
     const oldScale = scale;
 
-    scale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, newScale));
+    scale = Math.max(
+        MIN_SCALE,
+        Math.min(MAX_SCALE, newScale)
+    );
 
-    if (centerX !== undefined && centerY !== undefined) {
-        const rect = viewport.getBoundingClientRect();
+    if (clientX !== undefined && clientY !== undefined) {
+        const rect = container.getBoundingClientRect();
 
-        const x = centerX - rect.left;
-        const y = centerY - rect.top;
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
 
-        translateX = x - (x - translateX) * (scale / oldScale);
-        translateY = y - (y - translateY) * (scale / oldScale);
+        offsetX = x - (x - offsetX) * (scale / oldScale);
+        offsetY = y - (y - offsetY) * (scale / oldScale);
     }
 
     updateMap();
@@ -174,119 +188,130 @@ function setZoom(newScale, centerX, centerY) {
 
 function resetMap() {
     scale = 1;
-    translateX = 0;
-    translateY = 0;
+    offsetX = 0;
+    offsetY = 0;
+
     updateMap();
 }
 
 zoomIn.addEventListener("click", () => {
-    setZoom(scale + 0.25);
+    zoomTo(scale + 0.25);
 });
 
 zoomOut.addEventListener("click", () => {
-    setZoom(scale - 0.25);
+    zoomTo(scale - 0.25);
 });
 
 zoomReset.addEventListener("click", resetMap);
 
-viewport.addEventListener("wheel", event => {
+container.addEventListener("wheel", event => {
     event.preventDefault();
 
-    const direction = event.deltaY < 0 ? 0.2 : -0.2;
-
-    setZoom(
-        scale + direction,
+    zoomTo(
+        scale + (event.deltaY < 0 ? 0.2 : -0.2),
         event.clientX,
         event.clientY
     );
 }, { passive: false });
 
-viewport.addEventListener("pointerdown", event => {
-    if (event.target.closest(".map-marker, .map-popup, .map-controls")) {
+container.addEventListener("pointerdown", event => {
+
+    if (
+        event.target.closest(".map-marker") ||
+        event.target.closest(".map-popup") ||
+        event.target.closest(".map-controls")
+    ) {
         return;
     }
 
-    isDragging = true;
+    dragging = true;
 
-    startX = event.clientX;
-    startY = event.clientY;
+    dragStartX = event.clientX;
+    dragStartY = event.clientY;
 
-    startTranslateX = translateX;
-    startTranslateY = translateY;
+    startOffsetX = offsetX;
+    startOffsetY = offsetY;
 
-    viewport.setPointerCapture(event.pointerId);
+    container.setPointerCapture(event.pointerId);
 });
 
-viewport.addEventListener("pointermove", event => {
-    if (!isDragging) {
+container.addEventListener("pointermove", event => {
+
+    if (!dragging) {
         return;
     }
 
-    translateX = startTranslateX + (event.clientX - startX);
-    translateY = startTranslateY + (event.clientY - startY);
+    offsetX = startOffsetX + (event.clientX - dragStartX);
+    offsetY = startOffsetY + (event.clientY - dragStartY);
 
     updateMap();
 });
 
-viewport.addEventListener("pointerup", event => {
-    isDragging = false;
+container.addEventListener("pointerup", event => {
 
-    if (viewport.hasPointerCapture(event.pointerId)) {
-        viewport.releasePointerCapture(event.pointerId);
+    dragging = false;
+
+    if (container.hasPointerCapture(event.pointerId)) {
+        container.releasePointerCapture(event.pointerId);
     }
 });
 
-viewport.addEventListener("pointercancel", () => {
-    isDragging = false;
+container.addEventListener("pointercancel", () => {
+    dragging = false;
 });
 
-function getTouchDistance(touch1, touch2) {
+function getDistance(touch1, touch2) {
     const dx = touch1.clientX - touch2.clientX;
     const dy = touch1.clientY - touch2.clientY;
 
     return Math.sqrt(dx * dx + dy * dy);
 }
 
-viewport.addEventListener("touchstart", event => {
+container.addEventListener("touchstart", event => {
+
     if (event.touches.length === 2) {
-        lastTouchDistance = getTouchDistance(
+        pinchDistance = getDistance(
             event.touches[0],
             event.touches[1]
         );
     }
+
 }, { passive: false });
 
-viewport.addEventListener("touchmove", event => {
-    if (event.touches.length !== 2 || lastTouchDistance === null) {
+container.addEventListener("touchmove", event => {
+
+    if (event.touches.length !== 2 || pinchDistance === null) {
         return;
     }
 
     event.preventDefault();
 
-    const currentDistance = getTouchDistance(
+    const newDistance = getDistance(
         event.touches[0],
         event.touches[1]
     );
 
-    const difference = currentDistance - lastTouchDistance;
+    const difference = newDistance - pinchDistance;
 
-    setZoom(scale + difference * 0.005);
+    zoomTo(scale + difference * 0.005);
 
-    lastTouchDistance = currentDistance;
+    pinchDistance = newDistance;
+
 }, { passive: false });
 
-viewport.addEventListener("touchend", () => {
-    lastTouchDistance = null;
+container.addEventListener("touchend", () => {
+    pinchDistance = null;
 });
 
-document.querySelectorAll(".map-marker").forEach(marker => {
+markers.forEach(marker => {
 
     marker.addEventListener("click", event => {
+
         event.stopPropagation();
 
         const place = places[marker.dataset.place];
 
-        document.querySelectorAll(".map-marker").forEach(item => {
+        markers.forEach(item => {
             item.classList.remove("active");
         });
 
@@ -303,12 +328,14 @@ document.querySelectorAll(".map-marker").forEach(marker => {
 });
 
 popupClose.addEventListener("click", event => {
+
     event.stopPropagation();
 
     popup.classList.remove("visible");
 
-    document.querySelectorAll(".map-marker").forEach(marker => {
+    markers.forEach(marker => {
         marker.classList.remove("active");
     });
+
 });
 </script>

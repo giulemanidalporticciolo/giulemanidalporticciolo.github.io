@@ -63,7 +63,12 @@ let startOffsetX = 0;
 
 let multiTouchDetected = false;
 
+let bounceAnimation = null;
+
 let mapHasScrolled = false;
+
+
+const BOUNCE_DISTANCE = 45;
 
 
 /* LIMITI DEL PAN */
@@ -105,9 +110,141 @@ function setOffset(newOffset) {
 }
 
 
+/* POSIZIONE CON RESISTENZA AI BORDI */
+
+function setOffsetWithResistance(newOffset) {
+
+    const limits = getLimits();
+
+    if (newOffset > limits.max) {
+
+        const overscroll =
+            newOffset - limits.max;
+
+        offsetX =
+            limits.max +
+            Math.min(
+                BOUNCE_DISTANCE,
+                overscroll * 0.25
+            );
+
+    } else if (newOffset < limits.min) {
+
+        const overscroll =
+            limits.min - newOffset;
+
+        offsetX =
+            limits.min -
+            Math.min(
+                BOUNCE_DISTANCE,
+                overscroll * 0.25
+            );
+
+    } else {
+
+        offsetX = newOffset;
+
+    }
+
+
+    canvas.style.transform =
+        `translateX(${offsetX}px)`;
+
+}
+
+
+/* RITORNO ELASTICO */
+
+function bounceBack() {
+
+    const limits = getLimits();
+
+    let target = offsetX;
+
+
+    if (offsetX > limits.max) {
+        target = limits.max;
+    }
+
+    if (offsetX < limits.min) {
+        target = limits.min;
+    }
+
+
+    if (target === offsetX) {
+        return;
+    }
+
+
+    if (bounceAnimation) {
+        cancelAnimationFrame(bounceAnimation);
+    }
+
+
+    const start = offsetX;
+    const startTime = performance.now();
+    const duration = 350;
+
+
+    function animate(time) {
+
+        const progress =
+            Math.min(
+                1,
+                (time - startTime) / duration
+            );
+
+
+        /*
+         * Curva ease-out elastica leggera.
+         */
+
+        const eased =
+            1 - Math.pow(1 - progress, 3);
+
+
+        offsetX =
+            start +
+            (target - start) * eased;
+
+
+        canvas.style.transform =
+            `translateX(${offsetX}px)`;
+
+
+        if (progress < 1) {
+
+            bounceAnimation =
+                requestAnimationFrame(animate);
+
+        } else {
+
+            offsetX = target;
+
+            canvas.style.transform =
+                `translateX(${offsetX}px)`;
+
+            bounceAnimation = null;
+
+        }
+
+    }
+
+
+    bounceAnimation =
+        requestAnimationFrame(animate);
+
+}
+
+
 /* RESET */
 
 function resetMap() {
+
+    if (bounceAnimation) {
+        cancelAnimationFrame(bounceAnimation);
+        bounceAnimation = null;
+    }
 
     setOffset(0);
 
@@ -127,7 +264,7 @@ container.addEventListener("pointerdown", event => {
 
 
     /*
-     * Se vengono rilevati due puntatori,
+     * Due dita:
      * blocchiamo completamente il pan.
      */
 
@@ -140,12 +277,6 @@ container.addEventListener("pointerdown", event => {
 
     }
 
-
-    /*
-     * Se un secondo dito è stato già rilevato,
-     * non permettiamo di ricominciare il pan
-     * finché tutti i puntatori non sono stati rimossi.
-     */
 
     if (multiTouchDetected) {
 
@@ -173,8 +304,7 @@ container.addEventListener("pointerdown", event => {
 container.addEventListener("pointermove", event => {
 
     /*
-     * Con due dita/puntatori:
-     * nessun movimento.
+     * Due dita = nessuna interazione.
      */
 
     if (
@@ -190,7 +320,7 @@ container.addEventListener("pointermove", event => {
         event.clientX - dragStartX;
 
 
-    setOffset(
+    setOffsetWithResistance(
         startOffsetX + movement
     );
 
@@ -199,10 +329,21 @@ container.addEventListener("pointermove", event => {
 
 function endPointer(event) {
 
-    activePointers = Math.max(
-        0,
-        activePointers - 1
-    );
+    activePointers =
+        Math.max(
+            0,
+            activePointers - 1
+        );
+
+
+    if (
+        dragging &&
+        activePointers === 0
+    ) {
+
+        bounceBack();
+
+    }
 
 
     dragging = false;
@@ -220,11 +361,6 @@ function endPointer(event) {
 
     }
 
-
-    /*
-     * Quando tutte le dita sono state tolte,
-     * permettiamo un nuovo pan con un solo dito.
-     */
 
     if (activePointers === 0) {
 

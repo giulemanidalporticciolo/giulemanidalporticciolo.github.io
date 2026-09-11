@@ -15,6 +15,7 @@ extra_css: sito/progetto/mappa-orientamento2.css
 </section>
 
 <section>
+
     <div class="map-container" id="map-container">
 
         <div class="map-canvas" id="map-canvas">
@@ -62,31 +63,54 @@ extra_css: sito/progetto/mappa-orientamento2.css
 
         </div>
 
-        <div class="map-popup" id="map-popup">
+        <div class="map-controls">
 
             <button
-                class="map-popup-close"
-                id="map-popup-close"
+                type="button"
+                id="zoom-in"
+                aria-label="Ingrandisci">
+                +
+            </button>
+
+            <button
+                type="button"
+                id="zoom-out"
+                aria-label="Riduci">
+                −
+            </button>
+
+            <button
+                type="button"
+                id="zoom-reset"
+                aria-label="Ripristina">
+                ↺
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="map-info" id="map-info">
+
+        <img id="map-info-image" src="" alt="">
+
+        <div class="map-info-content">
+
+            <button
+                class="map-info-close"
+                id="map-info-close"
                 aria-label="Chiudi">
                 ×
             </button>
 
-            <img id="map-popup-image" src="" alt="">
+            <h2 id="map-info-title"></h2>
 
-            <div class="map-popup-content">
-                <h2 id="map-popup-title"></h2>
-                <p id="map-popup-description"></p>
-            </div>
+            <p id="map-info-description"></p>
 
-        </div>
-
-        <div class="map-controls">
-            <button type="button" id="zoom-in" aria-label="Ingrandisci">+</button>
-            <button type="button" id="zoom-out" aria-label="Riduci">−</button>
-            <button type="button" id="zoom-reset" aria-label="Ripristina">↺</button>
         </div>
 
     </div>
+
 </section>
 
 <script>
@@ -133,11 +157,11 @@ const places = {
 const container = document.getElementById("map-container");
 const canvas = document.getElementById("map-canvas");
 
-const popup = document.getElementById("map-popup");
-const popupImage = document.getElementById("map-popup-image");
-const popupTitle = document.getElementById("map-popup-title");
-const popupDescription = document.getElementById("map-popup-description");
-const popupClose = document.getElementById("map-popup-close");
+const info = document.getElementById("map-info");
+const infoImage = document.getElementById("map-info-image");
+const infoTitle = document.getElementById("map-info-title");
+const infoDescription = document.getElementById("map-info-description");
+const infoClose = document.getElementById("map-info-close");
 
 const markers = document.querySelectorAll(".map-marker");
 
@@ -156,6 +180,7 @@ let startOffsetX = 0;
 let startOffsetY = 0;
 
 let pinchDistance = null;
+let mapHasScrolled = false;
 
 const MIN_SCALE = 1;
 const MAX_SCALE = 3;
@@ -166,6 +191,7 @@ function updateMap() {
 }
 
 function zoomTo(newScale, clientX, clientY) {
+
     const oldScale = scale;
 
     scale = Math.max(
@@ -173,20 +199,28 @@ function zoomTo(newScale, clientX, clientY) {
         Math.min(MAX_SCALE, newScale)
     );
 
-    if (clientX !== undefined && clientY !== undefined) {
+    if (
+        clientX !== undefined &&
+        clientY !== undefined
+    ) {
+
         const rect = container.getBoundingClientRect();
 
         const x = clientX - rect.left;
         const y = clientY - rect.top;
 
-        offsetX = x - (x - offsetX) * (scale / oldScale);
-        offsetY = y - (y - offsetY) * (scale / oldScale);
+        offsetX =
+            x - (x - offsetX) * (scale / oldScale);
+
+        offsetY =
+            y - (y - offsetY) * (scale / oldScale);
     }
 
     updateMap();
 }
 
 function resetMap() {
+
     scale = 1;
     offsetX = 0;
     offsetY = 0;
@@ -205,6 +239,7 @@ zoomOut.addEventListener("click", () => {
 zoomReset.addEventListener("click", resetMap);
 
 container.addEventListener("wheel", event => {
+
     event.preventDefault();
 
     zoomTo(
@@ -212,13 +247,13 @@ container.addEventListener("wheel", event => {
         event.clientX,
         event.clientY
     );
+
 }, { passive: false });
 
 container.addEventListener("pointerdown", event => {
 
     if (
         event.target.closest(".map-marker") ||
-        event.target.closest(".map-popup") ||
         event.target.closest(".map-controls")
     ) {
         return;
@@ -241,8 +276,11 @@ container.addEventListener("pointermove", event => {
         return;
     }
 
-    offsetX = startOffsetX + (event.clientX - dragStartX);
-    offsetY = startOffsetY + (event.clientY - dragStartY);
+    offsetX =
+        startOffsetX + (event.clientX - dragStartX);
+
+    offsetY =
+        startOffsetY + (event.clientY - dragStartY);
 
     updateMap();
 });
@@ -260,9 +298,13 @@ container.addEventListener("pointercancel", () => {
     dragging = false;
 });
 
-function getDistance(touch1, touch2) {
-    const dx = touch1.clientX - touch2.clientX;
-    const dy = touch1.clientY - touch2.clientY;
+function getTouchDistance(touch1, touch2) {
+
+    const dx =
+        touch1.clientX - touch2.clientX;
+
+    const dy =
+        touch1.clientY - touch2.clientY;
 
     return Math.sqrt(dx * dx + dy * dy);
 }
@@ -270,7 +312,8 @@ function getDistance(touch1, touch2) {
 container.addEventListener("touchstart", event => {
 
     if (event.touches.length === 2) {
-        pinchDistance = getDistance(
+
+        pinchDistance = getTouchDistance(
             event.touches[0],
             event.touches[1]
         );
@@ -280,18 +323,22 @@ container.addEventListener("touchstart", event => {
 
 container.addEventListener("touchmove", event => {
 
-    if (event.touches.length !== 2 || pinchDistance === null) {
+    if (
+        event.touches.length !== 2 ||
+        pinchDistance === null
+    ) {
         return;
     }
 
     event.preventDefault();
 
-    const newDistance = getDistance(
+    const newDistance = getTouchDistance(
         event.touches[0],
         event.touches[1]
     );
 
-    const difference = newDistance - pinchDistance;
+    const difference =
+        newDistance - pinchDistance;
 
     zoomTo(scale + difference * 0.005);
 
@@ -309,7 +356,8 @@ markers.forEach(marker => {
 
         event.stopPropagation();
 
-        const place = places[marker.dataset.place];
+        const place =
+            places[marker.dataset.place];
 
         markers.forEach(item => {
             item.classList.remove("active");
@@ -317,21 +365,38 @@ markers.forEach(marker => {
 
         marker.classList.add("active");
 
-        popupImage.src = place.image;
-        popupImage.alt = place.title;
-        popupTitle.textContent = place.title;
-        popupDescription.textContent = place.description;
+        infoImage.src = place.image;
+        infoImage.alt = place.title;
+        infoTitle.textContent = place.title;
+        infoDescription.textContent = place.description;
 
-        popup.classList.add("visible");
+        info.classList.add("visible");
+
+        if (!mapHasScrolled) {
+
+            mapHasScrolled = true;
+
+            setTimeout(() => {
+
+                const infoTop =
+                    info.getBoundingClientRect().top +
+                    window.scrollY;
+
+                window.scrollTo({
+                    top: infoTop - 30,
+                    behavior: "smooth"
+                });
+
+            }, 50);
+        }
+
     });
 
 });
 
-popupClose.addEventListener("click", event => {
+infoClose.addEventListener("click", () => {
 
-    event.stopPropagation();
-
-    popup.classList.remove("visible");
+    info.classList.remove("visible");
 
     markers.forEach(marker => {
         marker.classList.remove("active");

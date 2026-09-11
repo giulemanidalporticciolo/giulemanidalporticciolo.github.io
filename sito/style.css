@@ -600,18 +600,17 @@ main a {
 }
 
 
-
 .map-container {
     position: relative;
     width: 900px;
     max-width: 100%;
-    margin: 40px 0 70px;
+    margin: 40px 0 20px;
     background: #080d3d;
     border-radius: 12px;
     overflow: hidden;
 }
 
-.map-container img {
+.map-container > img {
     display: block;
     width: 100%;
     height: auto;
@@ -631,11 +630,30 @@ main a {
     animation: marker-pulse 2s infinite;
 }
 
+@keyframes marker-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(30, 90, 168, 0.5);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(30, 90, 168, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(30, 90, 168, 0);
+    }
+}
+
 .map-marker span {
     display: block;
     width: 100%;
     height: 100%;
     border-radius: 50%;
+}
+
+.map-marker.active {
+    background: #000;
+    animation: none;
 }
 
 .marker-isoletta {
@@ -663,16 +681,57 @@ main a {
     top: 34%;
 }
 
-@keyframes marker-pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(30, 90, 168, 0.5);
+.map-info {
+    display: none;
+    width: 700px;
+    max-width: 100%;
+    margin: 30px 0 70px;
+    gap: 25px;
+    align-items: flex-start;
+}
+
+.map-info.visible {
+    display: flex;
+}
+
+.map-info img {
+    display: block;
+    width: 300px;
+    max-width: 45%;
+    height: auto;
+    border-radius: 12px;
+}
+
+.map-info-content {
+    flex: 1;
+}
+
+.map-info-content h2 {
+    margin: 0 0 10px;
+}
+
+.map-info-content p {
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .map-marker {
+        width: 13px;
+        height: 13px;
+        border-width: 2px;
     }
 
-    70% {
-        box-shadow: 0 0 0 10px rgba(30, 90, 168, 0);
+    .map-info {
+        flex-direction: column;
+        margin-top: 25px;
     }
 
-    100% {
-        box-shadow: 0 0 0 0 rgba(30, 90, 168, 0);
+    .map-info img {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .map-info-content h2 {
+        font-size: 1.6rem;
     }
 }

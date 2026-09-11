@@ -105,6 +105,8 @@ const infoImage = document.getElementById("map-info-image");
 const infoTitle = document.getElementById("map-info-title");
 const infoDescription = document.getElementById("map-info-description");
 
+let mapHasScrolled = false;
+
 markers.forEach(marker => {
     marker.addEventListener("click", () => {
         const place = places[marker.dataset.place];
@@ -119,15 +121,18 @@ markers.forEach(marker => {
 
         info.classList.add("visible");
 
-        setTimeout(() => {
-            const offset = 20;
-            const top = info.getBoundingClientRect().top + window.scrollY - offset;
+        if (!mapHasScrolled) {
+            mapHasScrolled = true;
 
-            window.scrollTo({
-                top: top,
-                behavior: "smooth"
-            });
-        }, 50);
+            setTimeout(() => {
+                const mapTop = document.querySelector(".map-container").getBoundingClientRect().top + window.scrollY;
+
+                window.scrollTo({
+                    top: mapTop - 30,
+                    behavior: "smooth"
+                });
+            }, 50);
+        }
     });
 });
 </script>

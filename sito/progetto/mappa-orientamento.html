@@ -1,0 +1,113 @@
+---
+layout: default
+title: Mappa di orientamento – Giù le mani dal Porticciolo
+description: Il progetto in relazione ai luoghi che conosciamo.
+extra_css: sito/progetto/mappa-orientamento.css
+---
+
+<section class="page-intro">
+    <h1>Mappa di orientamento</h1>
+
+    <p>
+        Il progetto visto in relazione ai luoghi e ai punti di riferimento
+        più conosciuti della zona.
+    </p>
+</section>
+
+<section>
+    <div class="map-container">
+
+        <img
+            src="{{ 'sito/img/progetto/mappa-orientamento.png' | relative_url }}"
+            alt="Mappa di orientamento del progetto con i principali punti di riferimento della zona"
+        >
+
+        <button class="map-marker marker-isoletta" aria-label="Bar Isoletta" data-place="isoletta">
+            <span></span>
+        </button>
+
+        <button class="map-marker marker-waqas" aria-label="Waqas Kebab" data-place="waqas">
+            <span></span>
+        </button>
+
+        <button class="map-marker marker-hotel" aria-label="Hotel Polo Nautico" data-place="hotel">
+            <span></span>
+        </button>
+
+        <button class="map-marker marker-quo-vadis" aria-label="Pizzeria Quo Vadis" data-place="quo-vadis">
+            <span></span>
+        </button>
+
+        <button class="map-marker marker-piazzetta" aria-label="Piazzetta del Porticciolo" data-place="piazzetta">
+            <span></span>
+        </button>
+
+    </div>
+
+    <div class="map-info" id="map-info">
+        <img id="map-info-image" src="" alt="">
+
+        <div class="map-info-content">
+            <h2 id="map-info-title"></h2>
+            <p id="map-info-description"></p>
+        </div>
+    </div>
+</section>
+
+<script>
+const basePath = "{{ 'sito/img/progetto/mappa-orientamento/' | relative_url }}";
+
+const places = {
+    isoletta: {
+        title: "Bar Isoletta",
+        image: basePath + "bar-isoletta.jpg",
+        description: "Bar Isoletta si trova nelle immediate vicinanze dell'area interessata dal progetto."
+    },
+
+    waqas: {
+        title: "Waqas Kebab",
+        image: basePath + "waqas-kebab.jpg",
+        description: "Waqas Kebab è uno dei punti di riferimento presenti lungo il tratto di quartiere interessato."
+    },
+
+    hotel: {
+        title: "Hotel Polo Nautico",
+        image: basePath + "hotel-polo-nautico.jpg",
+        description: "L'Hotel Polo Nautico si trova in prossimità dell'area del progetto."
+    },
+
+    "quo-vadis": {
+        title: "Pizzeria Quo Vadis",
+        image: basePath + "pizzeria-quo-vadis.jpg",
+        description: "La Pizzeria Quo Vadis è un altro punto di riferimento utile per orientarsi rispetto all'area del progetto."
+    },
+
+    piazzetta: {
+        title: "Piazzetta del Porticciolo",
+        image: basePath + "piazzetta-porticciolo.jpg",
+        description: "La Piazzetta del Porticciolo è uno degli spazi direttamente interessati dalla trasformazione prevista dal progetto."
+    }
+};
+
+const markers = document.querySelectorAll(".map-marker");
+const info = document.getElementById("map-info");
+const infoImage = document.getElementById("map-info-image");
+const infoTitle = document.getElementById("map-info-title");
+const infoDescription = document.getElementById("map-info-description");
+
+markers.forEach(marker => {
+    marker.addEventListener("click", () => {
+        const place = places[marker.dataset.place];
+
+        markers.forEach(item => item.classList.remove("active"));
+        marker.classList.add("active");
+
+        infoImage.src = place.image;
+        infoImage.alt = place.title;
+        infoTitle.textContent = place.title;
+        infoDescription.textContent = place.description;
+
+        info.classList.add("visible");
+    });
+});
+</script>

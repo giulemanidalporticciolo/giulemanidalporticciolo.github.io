@@ -7,7 +7,7 @@
     background: #080d3d;
     border-radius: 12px;
     overflow: hidden;
-    touch-action: pan-x;
+    touch-action: pan-y;
     cursor: grab;
 }
 
@@ -31,6 +31,8 @@
     pointer-events: none;
 }
 
+
+/* MARKER */
 
 .map-marker {
     position: absolute;
@@ -98,6 +100,8 @@
 
 }
 
+
+/* POSIZIONE MARKER */
 
 .marker-isoletta {
     left: 21%;

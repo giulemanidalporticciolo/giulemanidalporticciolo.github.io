@@ -1,0 +1,314 @@
+---
+layout: default
+title: Mappa di orientamento – Giù le mani dal Porticciolo
+description: Il progetto visto in relazione ai luoghi e ai punti di riferimento più conosciuti della zona.
+extra_css: mappa-orientamento2.css
+---
+
+<section class="page-intro">
+    <h1>Mappa di orientamento</h1>
+
+    <p>
+        Il progetto visto in relazione ai luoghi e ai punti di riferimento
+        più conosciuti della zona.
+    </p>
+</section>
+
+<section class="orientation-map">
+
+    <div class="map-wrapper">
+
+        <div class="map-viewport" id="map-viewport">
+
+            <div class="map-canvas" id="map-canvas">
+
+                <img
+                    src="{{ 'sito/img/progetto/mappa-orientamento.png' | relative_url }}"
+                    alt="Mappa di orientamento del progetto e dei principali punti di riferimento della zona"
+                >
+
+                <button class="map-marker marker-isoletta"
+                        aria-label="Bar Isoletta"
+                        data-place="isoletta">
+                    <span></span>
+                </button>
+
+                <button class="map-marker marker-waqas"
+                        aria-label="Waqas Kebab"
+                        data-place="waqas">
+                    <span></span>
+                </button>
+
+                <button class="map-marker marker-hotel"
+                        aria-label="Hotel Polo Nautico"
+                        data-place="hotel">
+                    <span></span>
+                </button>
+
+                <button class="map-marker marker-quo-vadis"
+                        aria-label="Pizzeria Quo Vadis"
+                        data-place="quo-vadis">
+                    <span></span>
+                </button>
+
+                <button class="map-marker marker-piazzetta"
+                        aria-label="Piazzetta del Porticciolo"
+                        data-place="piazzetta">
+                    <span></span>
+                </button>
+
+            </div>
+
+            <div class="map-popup" id="map-popup">
+
+                <button class="map-popup-close" id="map-popup-close" aria-label="Chiudi">
+                    ×
+                </button>
+
+                <img id="map-popup-image" src="" alt="">
+
+                <div class="map-popup-content">
+                    <h2 id="map-popup-title"></h2>
+                    <p id="map-popup-description"></p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="map-controls">
+            <button type="button" id="zoom-in" aria-label="Ingrandisci la mappa">+</button>
+            <button type="button" id="zoom-out" aria-label="Riduci la mappa">−</button>
+            <button type="button" id="zoom-reset" aria-label="Ripristina la mappa">↺</button>
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+const basePath = "{{ 'sito/img/progetto/mappa-orientamento/' | relative_url }}";
+
+const places = {
+    isoletta: {
+        title: "Bar Isoletta",
+        image: basePath + "bar-isoletta.jpg",
+        description: "Bar Isoletta si trova nelle immediate vicinanze dell'area interessata dal progetto."
+    },
+
+    waqas: {
+        title: "Waqas Kebab",
+        image: basePath + "waqas-kebab.jpg",
+        description: "Waqas Kebab è uno dei punti di riferimento presenti lungo il tratto di quartiere interessato."
+    },
+
+    hotel: {
+        title: "Hotel Polo Nautico",
+        image: basePath + "hotel-polo-nautico.jpg",
+        description: "L'Hotel Polo Nautico si trova in prossimità dell'area del progetto."
+    },
+
+    "quo-vadis": {
+        title: "Pizzeria Quo Vadis",
+        image: basePath + "pizzeria-quo-vadis.jpg",
+        description: "La Pizzeria Quo Vadis è un altro punto di riferimento utile per orientarsi rispetto all'area del progetto."
+    },
+
+    piazzetta: {
+        title: "Piazzetta del Porticciolo",
+        image: basePath + "piazzetta-porticciolo.jpg",
+        description: "La Piazzetta del Porticciolo è uno degli spazi direttamente interessati dalla trasformazione prevista dal progetto."
+    }
+};
+
+const viewport = document.getElementById("map-viewport");
+const canvas = document.getElementById("map-canvas");
+
+const popup = document.getElementById("map-popup");
+const popupImage = document.getElementById("map-popup-image");
+const popupTitle = document.getElementById("map-popup-title");
+const popupDescription = document.getElementById("map-popup-description");
+const popupClose = document.getElementById("map-popup-close");
+
+const zoomIn = document.getElementById("zoom-in");
+const zoomOut = document.getElementById("zoom-out");
+const zoomReset = document.getElementById("zoom-reset");
+
+let scale = 1;
+let translateX = 0;
+let translateY = 0;
+
+let isDragging = false;
+let startX = 0;
+let startY = 0;
+let startTranslateX = 0;
+let startTranslateY = 0;
+
+let lastTouchDistance = null;
+
+const MIN_ZOOM = 1;
+const MAX_ZOOM = 3;
+
+function updateMap() {
+    canvas.style.transform =
+        `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+}
+
+function setZoom(newScale, centerX, centerY) {
+    const oldScale = scale;
+
+    scale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, newScale));
+
+    if (centerX !== undefined && centerY !== undefined) {
+        const rect = viewport.getBoundingClientRect();
+
+        const x = centerX - rect.left;
+        const y = centerY - rect.top;
+
+        translateX = x - (x - translateX) * (scale / oldScale);
+        translateY = y - (y - translateY) * (scale / oldScale);
+    }
+
+    updateMap();
+}
+
+function resetMap() {
+    scale = 1;
+    translateX = 0;
+    translateY = 0;
+    updateMap();
+}
+
+zoomIn.addEventListener("click", () => {
+    setZoom(scale + 0.25);
+});
+
+zoomOut.addEventListener("click", () => {
+    setZoom(scale - 0.25);
+});
+
+zoomReset.addEventListener("click", resetMap);
+
+viewport.addEventListener("wheel", event => {
+    event.preventDefault();
+
+    const direction = event.deltaY < 0 ? 0.2 : -0.2;
+
+    setZoom(
+        scale + direction,
+        event.clientX,
+        event.clientY
+    );
+}, { passive: false });
+
+viewport.addEventListener("pointerdown", event => {
+    if (event.target.closest(".map-marker, .map-popup, .map-controls")) {
+        return;
+    }
+
+    isDragging = true;
+
+    startX = event.clientX;
+    startY = event.clientY;
+
+    startTranslateX = translateX;
+    startTranslateY = translateY;
+
+    viewport.setPointerCapture(event.pointerId);
+});
+
+viewport.addEventListener("pointermove", event => {
+    if (!isDragging) {
+        return;
+    }
+
+    translateX = startTranslateX + (event.clientX - startX);
+    translateY = startTranslateY + (event.clientY - startY);
+
+    updateMap();
+});
+
+viewport.addEventListener("pointerup", event => {
+    isDragging = false;
+
+    if (viewport.hasPointerCapture(event.pointerId)) {
+        viewport.releasePointerCapture(event.pointerId);
+    }
+});
+
+viewport.addEventListener("pointercancel", () => {
+    isDragging = false;
+});
+
+function getTouchDistance(touch1, touch2) {
+    const dx = touch1.clientX - touch2.clientX;
+    const dy = touch1.clientY - touch2.clientY;
+
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+viewport.addEventListener("touchstart", event => {
+    if (event.touches.length === 2) {
+        lastTouchDistance = getTouchDistance(
+            event.touches[0],
+            event.touches[1]
+        );
+    }
+}, { passive: false });
+
+viewport.addEventListener("touchmove", event => {
+    if (event.touches.length !== 2 || lastTouchDistance === null) {
+        return;
+    }
+
+    event.preventDefault();
+
+    const currentDistance = getTouchDistance(
+        event.touches[0],
+        event.touches[1]
+    );
+
+    const difference = currentDistance - lastTouchDistance;
+
+    setZoom(scale + difference * 0.005);
+
+    lastTouchDistance = currentDistance;
+}, { passive: false });
+
+viewport.addEventListener("touchend", () => {
+    lastTouchDistance = null;
+});
+
+document.querySelectorAll(".map-marker").forEach(marker => {
+
+    marker.addEventListener("click", event => {
+        event.stopPropagation();
+
+        const place = places[marker.dataset.place];
+
+        document.querySelectorAll(".map-marker").forEach(item => {
+            item.classList.remove("active");
+        });
+
+        marker.classList.add("active");
+
+        popupImage.src = place.image;
+        popupImage.alt = place.title;
+        popupTitle.textContent = place.title;
+        popupDescription.textContent = place.description;
+
+        popup.classList.add("visible");
+    });
+
+});
+
+popupClose.addEventListener("click", event => {
+    event.stopPropagation();
+
+    popup.classList.remove("visible");
+
+    document.querySelectorAll(".map-marker").forEach(marker => {
+        marker.classList.remove("active");
+    });
+});
+</script>

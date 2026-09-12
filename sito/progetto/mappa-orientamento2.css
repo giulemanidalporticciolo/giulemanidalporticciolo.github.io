@@ -151,6 +151,7 @@
 
 .map-pan-cue.visible {
     opacity: 1;
+    animation: pan-cue 1.8s ease-in-out infinite;
 }
 
 .map-pan-cue::before,
@@ -165,37 +166,21 @@
 
 .map-pan-cue::before {
     transform: rotate(-135deg);
-    animation: pan-cue-left 1.8s ease-in-out infinite;
 }
 
 .map-pan-cue::after {
     transform: rotate(45deg);
-    animation: pan-cue-right 1.8s ease-in-out infinite;
 }
 
-@keyframes pan-cue-left {
+@keyframes pan-cue {
 
     0%, 100% {
-        transform: translateX(0) rotate(-135deg);
+        margin-left: 0;
         opacity: 0.55;
     }
 
     50% {
-        transform: translateX(-6px) rotate(-135deg);
-        opacity: 1;
-    }
-
-}
-
-@keyframes pan-cue-right {
-
-    0%, 100% {
-        transform: translateX(0) rotate(45deg);
-        opacity: 0.55;
-    }
-
-    50% {
-        transform: translateX(6px) rotate(45deg);
+        margin-left: -10px;
         opacity: 1;
     }
 

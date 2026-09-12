@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow+Semi+Condensed:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     {% if page.extra_css %}
-    <link rel="stylesheet" href="{{ page.extra_css | relative_url }}?v={{ site.time | date: '%s' }}">
+    <link rel="stylesheet" href="{{ page.extra_css | relative_url }}?v={{ page.extra_css | file_date | date: '%s' }}">
     {% endif %}
 </head>
 

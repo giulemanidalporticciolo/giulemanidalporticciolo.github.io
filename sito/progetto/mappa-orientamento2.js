@@ -229,6 +229,37 @@ function getNearestMarker(currentMarker, direction) {
 
 
 /* --------------------------------------------------
+   MARKER ESTREMO
+-------------------------------------------------- */
+
+function getExtremeMarker(direction) {
+    let extremeMarker = null;
+    let extremeX =
+        direction === "next"
+            ? Infinity
+            : -Infinity;
+
+    markers.forEach(marker => {
+        const x = marker.offsetLeft;
+
+        if (direction === "next") {
+            if (x < extremeX) {
+                extremeX = x;
+                extremeMarker = marker;
+            }
+        } else {
+            if (x > extremeX) {
+                extremeX = x;
+                extremeMarker = marker;
+            }
+        }
+    });
+
+    return extremeMarker;
+}
+
+
+/* --------------------------------------------------
    FRECCE SCHEDE
 -------------------------------------------------- */
 
@@ -256,20 +287,23 @@ navButtons.forEach(button => {
                 ? "prev"
                 : "next";
 
-        const nextMarker =
+        let nextMarker =
             getNearestMarker(
                 currentMarker,
                 direction
             );
 
-        if (!nextMarker) {
-            const markerArray =
-                Array.from(markers);
+        /*
+         * Se non esiste un marker nella direzione,
+         * facciamo wrap usando la posizione reale:
+         *
+         * NEXT → marker più a sinistra
+         * PREV → marker più a destra
+         */
 
+        if (!nextMarker) {
             nextMarker =
-                direction === "next"
-                    ? markerArray[0]
-                    : markerArray[markerArray.length - 1];
+                getExtremeMarker(direction);
         }
 
         if (!nextMarker) return;

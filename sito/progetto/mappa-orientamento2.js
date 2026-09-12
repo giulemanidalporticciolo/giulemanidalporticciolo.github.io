@@ -12,8 +12,6 @@ const infoDescription =
 const markers =
     document.querySelectorAll(".map-marker");
 
-let mapHasScrolled = false;
-
 
 /*
  * DATI DEI LUOGHI
@@ -72,32 +70,29 @@ markers.forEach(marker => {
 
 
         /*
-         * Scroll automatico solo al primo click.
+         * Porta sempre la mappa all'inizio
+         * dello schermo.
          */
 
-        if (!mapHasScrolled) {
+        setTimeout(() => {
 
-            mapHasScrolled = true;
-
-
-            setTimeout(() => {
-
-                const infoTop =
-                    info.getBoundingClientRect().top +
-                    window.scrollY;
+            const mapTop =
+                document
+                    .getElementById("map-container")
+                    .getBoundingClientRect()
+                    .top +
+                window.scrollY;
 
 
-                window.scrollTo({
+            window.scrollTo({
 
-                    top: infoTop - 30,
+                top: mapTop,
 
-                    behavior: "smooth"
+                behavior: "smooth"
 
-                });
+            });
 
-            }, 50);
-
-        }
+        }, 50);
 
     });
 

@@ -223,20 +223,42 @@
 
 .map-info {
     display: none;
-    position: relative;
     width: 700px;
     max-width: 100%;
     margin: 30px 0 70px;
-    gap: 25px;
-    align-items: flex-start;
+    overflow: hidden;
 }
 
 .map-info.visible {
+    display: block;
+}
+
+.map-info-track {
     display: flex;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+.map-info-track::-webkit-scrollbar {
+    display: none;
+}
+
+.map-info-card {
+    display: flex;
+    width: 100%;
+    min-width: 100%;
+    flex-shrink: 0;
+    gap: 25px;
+    align-items: flex-start;
+    scroll-snap-align: start;
 }
 
 .map-info-image {
-    position: relative;
     width: 300px;
     max-width: 45%;
     flex-shrink: 0;
@@ -354,10 +376,13 @@
     }
 
     .map-info {
-        flex-direction: column;
         width: 100%;
         margin-top: 25px;
         margin-bottom: 50px;
+    }
+
+    .map-info-card {
+        flex-direction: column;
         gap: 18px;
     }
 

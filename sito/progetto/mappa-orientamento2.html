@@ -63,88 +63,250 @@ extra_css: sito/progetto/mappa-orientamento2.css
 
     </div>
 
+
     <div class="map-info" id="map-info">
 
-        <div class="map-info-image">
+        <div class="map-info-track" id="map-info-track">
 
-            <img
-                id="map-info-image"
-                src=""
-                alt=""
-            >
+            <article class="map-info-card" data-place="isoletta">
 
-        </div>
-
-        <div class="map-info-content">
-
-            <div class="map-info-heading">
-
-                <h2 id="map-info-title"></h2>
-
-                <div class="map-info-navs">
-
-                    <button
-                        class="map-info-nav map-info-prev"
-                        id="map-info-prev"
-                        type="button"
-                        aria-label="Luogo precedente"
+                <div class="map-info-image">
+                    <img
+                        src="{{ 'sito/img/progetto/mappa-orientamento/bar-isoletta.jpg' | relative_url }}"
+                        alt="Bar Isoletta"
                     >
-                        <span></span>
-                    </button>
+                </div>
 
-                    <button
-                        class="map-info-nav map-info-next"
-                        id="map-info-next"
-                        type="button"
-                        aria-label="Luogo successivo"
-                    >
-                        <span></span>
-                    </button>
+                <div class="map-info-content">
+
+                    <div class="map-info-heading">
+
+                        <h2>Bar Isoletta</h2>
+
+                        <div class="map-info-navs">
+
+                            <button
+                                class="map-info-nav map-info-prev"
+                                type="button"
+                                aria-label="Luogo precedente"
+                            >
+                                <span></span>
+                            </button>
+
+                            <button
+                                class="map-info-nav map-info-next"
+                                type="button"
+                                aria-label="Luogo successivo"
+                            >
+                                <span></span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <p>
+                        Il Bar Isoletta si trova sulla spiaggetta del Porticciolo,
+                        uno degli spazi che verrebbero trasformati e cementificati
+                        dal progetto.
+                    </p>
 
                 </div>
 
-            </div>
+            </article>
 
-            <p id="map-info-description"></p>
+
+            <article class="map-info-card" data-place="waqas">
+
+                <div class="map-info-image">
+                    <img
+                        src="{{ 'sito/img/progetto/mappa-orientamento/waqas-kebab.jpg' | relative_url }}"
+                        alt="Waqas Kebab"
+                    >
+                </div>
+
+                <div class="map-info-content">
+
+                    <div class="map-info-heading">
+
+                        <h2>Waqas Kebab</h2>
+
+                        <div class="map-info-navs">
+
+                            <button
+                                class="map-info-nav map-info-prev"
+                                type="button"
+                                aria-label="Luogo precedente"
+                            >
+                                <span></span>
+                            </button>
+
+                            <button
+                                class="map-info-nav map-info-next"
+                                type="button"
+                                aria-label="Luogo successivo"
+                            >
+                                <span></span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <p>
+                        Waqas Kebab si trova di fronte alla Piazzetta del Porticciolo,
+                        lungo il tratto di quartiere interessato dal progetto.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="map-info-card" data-place="quo-vadis">
+
+                <div class="map-info-image">
+                    <img
+                        src="{{ 'sito/img/progetto/mappa-orientamento/pizzeria-quo-vadis.jpg' | relative_url }}"
+                        alt="Pizzeria Quo Vadis"
+                    >
+                </div>
+
+                <div class="map-info-content">
+
+                    <div class="map-info-heading">
+
+                        <h2>Pizzeria Quo Vadis</h2>
+
+                        <div class="map-info-navs">
+
+                            <button
+                                class="map-info-nav map-info-prev"
+                                type="button"
+                                aria-label="Luogo precedente"
+                            >
+                                <span></span>
+                            </button>
+
+                            <button
+                                class="map-info-nav map-info-next"
+                                type="button"
+                                aria-label="Luogo successivo"
+                            >
+                                <span></span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <p>
+                        La Pizzeria Quo Vadis è un altro punto di riferimento utile
+                        per orientarsi rispetto all'area del progetto.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="map-info-card" data-place="piazzetta">
+
+                <div class="map-info-image">
+                    <img
+                        src="{{ 'sito/img/progetto/mappa-orientamento/piazzetta-porticciolo.jpg' | relative_url }}"
+                        alt="Piazzetta del Porticciolo"
+                    >
+                </div>
+
+                <div class="map-info-content">
+
+                    <div class="map-info-heading">
+
+                        <h2>Piazzetta del Porticciolo</h2>
+
+                        <div class="map-info-navs">
+
+                            <button
+                                class="map-info-nav map-info-prev"
+                                type="button"
+                                aria-label="Luogo precedente"
+                            >
+                                <span></span>
+                            </button>
+
+                            <button
+                                class="map-info-nav map-info-next"
+                                type="button"
+                                aria-label="Luogo successivo"
+                            >
+                                <span></span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <p>
+                        La Piazzetta del Porticciolo verrebbe cancellata dal progetto
+                        e sostituita dalle nuove strutture previste.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="map-info-card" data-place="spiaggetta">
+
+                <div class="map-info-image">
+                    <img
+                        src="{{ 'sito/img/progetto/mappa-orientamento/spiaggetta-porticciolo.jpg' | relative_url }}"
+                        alt="Spiaggetta del Porticciolo"
+                    >
+                </div>
+
+                <div class="map-info-content">
+
+                    <div class="map-info-heading">
+
+                        <h2>Spiaggetta del Porticciolo</h2>
+
+                        <div class="map-info-navs">
+
+                            <button
+                                class="map-info-nav map-info-prev"
+                                type="button"
+                                aria-label="Luogo precedente"
+                            >
+                                <span></span>
+                            </button>
+
+                            <button
+                                class="map-info-nav map-info-next"
+                                type="button"
+                                aria-label="Luogo successivo"
+                            >
+                                <span></span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <p>
+                        La Spiaggetta del Porticciolo verrebbe cementificata e
+                        trasformata dalle opere previste dal progetto.
+                    </p>
+
+                </div>
+
+            </article>
 
         </div>
 
     </div>
 
 </section>
-
-<script type="application/json" id="map-places">
-{
-    "isoletta": {
-        "title": "Bar Isoletta",
-        "image": "{{ 'sito/img/progetto/mappa-orientamento/bar-isoletta.jpg' | relative_url }}",
-        "description": "Il Bar Isoletta si trova sulla spiaggetta del Porticciolo, uno degli spazi che verrebbero trasformati e cementificati dal progetto."
-    },
-
-    "waqas": {
-        "title": "Waqas Kebab",
-        "image": "{{ 'sito/img/progetto/mappa-orientamento/waqas-kebab.jpg' | relative_url }}",
-        "description": "Waqas Kebab si trova di fronte alla Piazzetta del Porticciolo, lungo il tratto di quartiere interessato dal progetto."
-    },
-
-    "quo-vadis": {
-        "title": "Pizzeria Quo Vadis",
-        "image": "{{ 'sito/img/progetto/mappa-orientamento/pizzeria-quo-vadis.jpg' | relative_url }}",
-        "description": "La Pizzeria Quo Vadis è un altro punto di riferimento utile per orientarsi rispetto all'area del progetto."
-    },
-
-    "piazzetta": {
-        "title": "Piazzetta del Porticciolo",
-        "image": "{{ 'sito/img/progetto/mappa-orientamento/piazzetta-porticciolo.jpg' | relative_url }}",
-        "description": "La Piazzetta del Porticciolo verrebbe cancellata dal progetto e sostituita dalle nuove strutture previste."
-    },
-
-    "spiaggetta": {
-        "title": "Spiaggetta del Porticciolo",
-        "image": "{{ 'sito/img/progetto/mappa-orientamento/spiaggetta-porticciolo.jpg' | relative_url }}",
-        "description": "La Spiaggetta del Porticciolo verrebbe cementificata e trasformata dalle opere previste dal progetto."
-    }
-}
-</script>
 
 <script src="{{ 'sito/progetto/mappa-orientamento2.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>

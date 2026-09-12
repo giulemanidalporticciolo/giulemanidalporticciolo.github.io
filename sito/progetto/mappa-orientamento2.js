@@ -1,24 +1,3 @@
-const info =
-    document.getElementById("map-info");
-
-const infoImage =
-    document.getElementById("map-info-image");
-
-const infoTitle =
-    document.getElementById("map-info-title");
-
-const infoDescription =
-    document.getElementById("map-info-description");
-
-const infoPrev =
-    document.getElementById("map-info-prev");
-
-const infoNext =
-    document.getElementById("map-info-next");
-
-const markers =
-    document.querySelectorAll(".map-marker");
-
 const mapContainer =
     document.getElementById("map-container");
 
@@ -28,15 +7,21 @@ const mapCanvas =
 const mapPanCue =
     document.getElementById("map-pan-cue");
 
+const info =
+    document.getElementById("map-info");
+
+const infoTrack =
+    document.getElementById("map-info-track");
+
+const markers =
+    document.querySelectorAll(".map-marker");
+
+const cards =
+    document.querySelectorAll(".map-info-card");
+
 
 /*
  * SCALA DELLA MAPPA
- *
- * data-map-scale="1"
- * = mappa a dimensione normale
- *
- * data-map-scale="1.8"
- * = mappa larga 180%
  */
 
 const mapScale =
@@ -52,20 +37,7 @@ mapCanvas.style.minWidth =
 
 
 /*
- * DATI DEI LUOGHI
- */
-
-const places =
-    JSON.parse(
-        document.getElementById("map-places").textContent
-    );
-
-
-/*
  * ORDINE DEI MARKER
- *
- * Determinato dalla posizione orizzontale
- * dei marker nella mappa.
  */
 
 const markerOrder =
@@ -78,15 +50,9 @@ const markerOrder =
 
     });
 
-let currentMarker = null;
-
 
 /*
- * CUE PANORAMICO
- *
- * Il cue compare solo se la mappa
- * è realmente scrollabile e si trova
- * all'inizio.
+ * MAPPA SCROLLABILE
  */
 
 let mapPanCueShown = false;
@@ -141,11 +107,6 @@ window.addEventListener(
 );
 
 
-/*
- * Aspetta che l'immagine abbia
- * determinato le dimensioni reali.
- */
-
 const mapImage =
     mapCanvas.querySelector("img");
 
@@ -172,7 +133,7 @@ if (mapImage) {
 
 
 /*
- * MOSTRA LUOGO
+ * SCHEDA
  */
 
 function showPlace(marker, shouldScrollPage = true) {
@@ -180,18 +141,18 @@ function showPlace(marker, shouldScrollPage = true) {
     const key =
         marker.dataset.place;
 
-    const place =
-        places[key];
+    const card =
+        document.querySelector(
+            `.map-info-card[data-place="${key}"]`
+        );
 
-    if (!place) {
+    if (!card) {
         return;
     }
 
-    currentMarker = marker;
-
-    mapPanCueShown = true;
-
-    mapPanCue.classList.remove("visible");
+    /*
+     * Evidenzia marker.
+     */
 
     markers.forEach(item => {
 
@@ -201,23 +162,35 @@ function showPlace(marker, shouldScrollPage = true) {
 
     marker.classList.add("active");
 
-    infoImage.src =
-        place.image;
+    mapPanCueShown = true;
 
-    infoImage.alt =
-        place.title;
+    mapPanCue.classList.remove("visible");
 
-    infoTitle.textContent =
-        place.title;
 
-    infoDescription.textContent =
-        place.description;
+    /*
+     * Mostra il blocco delle schede.
+     */
 
     info.classList.add("visible");
 
 
     /*
-     * Porta il marker al centro della mappa.
+     * Porta la scheda selezionata
+     * nella posizione visibile.
+     */
+
+    infoTrack.scrollTo({
+
+        left: card.offsetLeft,
+
+        behavior: "smooth"
+
+    });
+
+
+    /*
+     * Porta anche il marker al centro
+     * della mappa.
      */
 
     const markerLeft =
@@ -238,7 +211,7 @@ function showPlace(marker, shouldScrollPage = true) {
 
     /*
      * Porta la mappa nella stessa posizione,
-     * leggermente sotto il bordo superiore dello schermo.
+     * leggermente sotto il bordo superiore.
      */
 
     if (shouldScrollPage) {
@@ -282,52 +255,62 @@ markers.forEach(marker => {
 
 
 /*
- * PRECEDENTE — LOOP
+ * FRECCE
  */
 
-infoPrev.addEventListener("click", () => {
+const navButtons =
+    document.querySelectorAll(".map-info-nav");
 
-    if (!currentMarker) {
-        return;
-    }
+navButtons.forEach(button => {
 
-    const position =
-        markerOrder.indexOf(currentMarker);
+    button.addEventListener("click", event => {
 
-    const previousPosition =
-        position <= 0
-            ? markerOrder.length - 1
-            : position - 1;
+        event.stopPropagation();
 
-    showPlace(
-        markerOrder[previousPosition],
-        false
-    );
+        const card =
+            button.closest(".map-info-card");
 
-});
+        if (!card) {
+            return;
+        }
 
+        const currentIndex =
+            Array.from(cards).indexOf(card);
 
-/*
- * SUCCESSIVO — LOOP
- */
+        let nextIndex;
 
-infoNext.addEventListener("click", () => {
+        if (
+            button.classList.contains("map-info-prev")
+        ) {
 
-    if (!currentMarker) {
-        return;
-    }
+            nextIndex =
+                currentIndex <= 0
+                    ? cards.length - 1
+                    : currentIndex - 1;
 
-    const position =
-        markerOrder.indexOf(currentMarker);
+        } else {
 
-    const nextPosition =
-        position >= markerOrder.length - 1
-            ? 0
-            : position + 1;
+            nextIndex =
+                currentIndex >= cards.length - 1
+                    ? 0
+                    : currentIndex + 1;
 
-    showPlace(
-        markerOrder[nextPosition],
-        false
-    );
+        }
+
+        const nextCard =
+            cards[nextIndex];
+
+        const marker =
+            document.querySelector(
+                `.map-marker[data-place="${nextCard.dataset.place}"]`
+            );
+
+        if (!marker) {
+            return;
+        }
+
+        showPlace(marker, false);
+
+    });
 
 });

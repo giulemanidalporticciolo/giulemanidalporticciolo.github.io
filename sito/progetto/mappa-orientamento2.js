@@ -13,6 +13,48 @@ mapCanvas.style.minWidth = `${mapScale * 100}%`;
 
 
 /* --------------------------------------------------
+   RIORDINA LE SCHEDE IN BASE ALLA POSIZIONE DEI MARKER
+-------------------------------------------------- */
+
+function sortCardsByMarkerPosition() {
+    const cardsArray = Array.from(cards);
+
+    cardsArray.sort((cardA, cardB) => {
+        const markerA = document.querySelector(
+            `.map-marker[data-place="${cardA.dataset.place}"]`
+        );
+
+        const markerB = document.querySelector(
+            `.map-marker[data-place="${cardB.dataset.place}"]`
+        );
+
+        if (!markerA || !markerB) return 0;
+
+        const xA = markerA.offsetLeft;
+        const xB = markerB.offsetLeft;
+
+        /*
+         * Prima ordiniamo da sinistra a destra.
+         * In caso di stessa posizione orizzontale,
+         * usiamo la posizione verticale come secondo criterio.
+         */
+
+        if (xA !== xB) {
+            return xA - xB;
+        }
+
+        return markerA.offsetTop - markerB.offsetTop;
+    });
+
+    cardsArray.forEach(card => {
+        infoTrack.appendChild(card);
+    });
+}
+
+sortCardsByMarkerPosition();
+
+
+/* --------------------------------------------------
    CUE PAN MAPPA
 -------------------------------------------------- */
 
@@ -190,83 +232,10 @@ markers.forEach(marker => {
 
 
 /* --------------------------------------------------
-   CALCOLO MARKER PIÙ VICINO
--------------------------------------------------- */
-
-function getNearestMarker(currentMarker, direction) {
-    const currentX = currentMarker.offsetLeft;
-    const currentY = currentMarker.offsetTop;
-
-    let nearestMarker = null;
-    let nearestDistance = Infinity;
-
-    markers.forEach(marker => {
-        if (marker === currentMarker) return;
-
-        const markerX = marker.offsetLeft;
-        const markerY = marker.offsetTop;
-
-        const dx = markerX - currentX;
-        const dy = markerY - currentY;
-
-        if (direction === "next" && dx <= 0) return;
-        if (direction === "prev" && dx >= 0) return;
-
-        const distance =
-            Math.sqrt(
-                (dx * dx) +
-                (dy * dy)
-            );
-
-        if (distance < nearestDistance) {
-            nearestDistance = distance;
-            nearestMarker = marker;
-        }
-    });
-
-    return nearestMarker;
-}
-
-
-/* --------------------------------------------------
-   MARKER ESTREMO
--------------------------------------------------- */
-
-function getExtremeMarker(direction) {
-    let extremeMarker = null;
-
-    let extremeX =
-        direction === "next"
-            ? Infinity
-            : -Infinity;
-
-    markers.forEach(marker => {
-        const x = marker.offsetLeft;
-
-        if (direction === "next") {
-            if (x < extremeX) {
-                extremeX = x;
-                extremeMarker = marker;
-            }
-        } else {
-            if (x > extremeX) {
-                extremeX = x;
-                extremeMarker = marker;
-            }
-        }
-    });
-
-    return extremeMarker;
-}
-
-
-/* --------------------------------------------------
    SCHEDA ATTUALMENTE VISIBILE
 -------------------------------------------------- */
 
 function getCurrentCard() {
-    if (!cards.length) return null;
-
     const currentScroll =
         infoTrack.scrollLeft;
 
@@ -288,6 +257,54 @@ function getCurrentCard() {
 
 
 /* --------------------------------------------------
+   SCHEDA SUCCESSIVA / PRECEDENTE
+-------------------------------------------------- */
+
+function getAdjacentMarker(currentMarker, direction) {
+    /*
+     * Le schede sono già state ordinate nel DOM
+     * in base alla posizione dei marker.
+     *
+     * Quindi usiamo direttamente quell'ordine.
+     */
+
+    const currentCard =
+        document.querySelector(
+            `.map-info-card[data-place="${currentMarker.dataset.place}"]`
+        );
+
+    if (!currentCard) return null;
+
+    const cardIndex =
+        Array.from(infoTrack.children).indexOf(currentCard);
+
+    if (cardIndex === -1) return null;
+
+    const totalCards =
+        infoTrack.children.length;
+
+    let nextIndex;
+
+    if (direction === "next") {
+        nextIndex =
+            (cardIndex + 1) % totalCards;
+    } else {
+        nextIndex =
+            (cardIndex - 1 + totalCards) % totalCards;
+    }
+
+    const nextCard =
+        infoTrack.children[nextIndex];
+
+    if (!nextCard) return null;
+
+    return document.querySelector(
+        `.map-marker[data-place="${nextCard.dataset.place}"]`
+    );
+}
+
+
+/* --------------------------------------------------
    FRECCE SCHEDE
 -------------------------------------------------- */
 
@@ -297,15 +314,6 @@ const navButtons =
 navButtons.forEach(button => {
     button.addEventListener("click", event => {
         event.stopPropagation();
-
-        /*
-         * Le frecce sono fuori dalle schede,
-         * quindi non possiamo più usare
-         * button.closest(".map-info-card").
-         *
-         * Ricaviamo la scheda attualmente visualizzata
-         * direttamente dalla posizione dello scroll.
-         */
 
         const currentCard =
             getCurrentCard();
@@ -324,24 +332,11 @@ navButtons.forEach(button => {
                 ? "prev"
                 : "next";
 
-        let nextMarker =
-            getNearestMarker(
+        const nextMarker =
+            getAdjacentMarker(
                 currentMarker,
                 direction
             );
-
-        /*
-         * Se non esiste un marker nella direzione,
-         * facciamo wrap usando la posizione reale:
-         *
-         * NEXT → marker più a sinistra
-         * PREV → marker più a destra
-         */
-
-        if (!nextMarker) {
-            nextMarker =
-                getExtremeMarker(direction);
-        }
 
         if (!nextMarker) return;
 

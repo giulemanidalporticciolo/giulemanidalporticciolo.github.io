@@ -10,6 +10,12 @@ const infoTitle =
 const infoDescription =
     document.getElementById("map-info-description");
 
+const infoPrev =
+    document.getElementById("map-info-prev");
+
+const infoNext =
+    document.getElementById("map-info-next");
+
 const markers =
     document.querySelectorAll(".map-marker");
 
@@ -28,6 +34,11 @@ const places =
     JSON.parse(
         document.getElementById("map-places").textContent
     );
+
+const placeKeys =
+    Object.keys(places);
+
+let currentIndex = -1;
 
 
 /*
@@ -76,53 +87,86 @@ updateMapPanCue();
 
 
 /*
- * MARKER
+ * MOSTRA LUOGO
  */
 
-markers.forEach(marker => {
+function showPlace(index, shouldScrollPage = true) {
 
-    marker.addEventListener("click", event => {
+    if (index < 0 || index >= placeKeys.length) {
+        return;
+    }
 
-        event.stopPropagation();
+    const key =
+        placeKeys[index];
 
-        /*
-         * Nasconde il cue quando viene selezionato un punto.
-         */
+    const place =
+        places[key];
 
-        mapPanCue.classList.remove("visible");
+    if (!place) {
+        return;
+    }
 
-        const place =
-            places[marker.dataset.place];
+    currentIndex = index;
 
-        if (!place) {
-            return;
+    mapPanCue.classList.remove("visible");
+
+    markers.forEach(marker => {
+
+        marker.classList.remove("active");
+
+        if (marker.dataset.place === key) {
+            marker.classList.add("active");
         }
 
-        markers.forEach(item => {
-            item.classList.remove("active");
+    });
+
+    infoImage.src =
+        place.image;
+
+    infoImage.alt =
+        place.title;
+
+    infoTitle.textContent =
+        place.title;
+
+    infoDescription.textContent =
+        place.description;
+
+    info.classList.add("visible");
+
+
+    /*
+     * Porta il marker al centro della mappa.
+     */
+
+    const marker =
+        document.querySelector(
+            `.map-marker[data-place="${key}"]`
+        );
+
+    if (marker) {
+
+        const markerLeft =
+            marker.offsetLeft;
+
+        const targetScroll =
+            markerLeft -
+            (mapContainer.clientWidth / 2);
+
+        mapContainer.scrollTo({
+            left: Math.max(0, targetScroll),
+            behavior: "smooth"
         });
 
-        marker.classList.add("active");
-
-        infoImage.src =
-            place.image;
-
-        infoImage.alt =
-            place.title;
-
-        infoTitle.textContent =
-            place.title;
-
-        infoDescription.textContent =
-            place.description;
-
-        info.classList.add("visible");
+    }
 
 
-        /*
-         * Porta sempre la mappa nella stessa posizione,
-         * leggermente sotto il bordo superiore dello schermo.
-         */
+    /*
+     * Porta la mappa nella stessa posizione
+     * leggermente sotto il bordo superiore dello schermo.
+     */
+
+    if (shouldScrollPage) {
 
         setTimeout(() => {
 
@@ -140,6 +184,72 @@ markers.forEach(marker => {
 
         }, 50);
 
+    }
+
+}
+
+
+/*
+ * MARKER
+ */
+
+markers.forEach((marker, index) => {
+
+    marker.addEventListener("click", event => {
+
+        event.stopPropagation();
+
+        const key =
+            marker.dataset.place;
+
+        const placeIndex =
+            placeKeys.indexOf(key);
+
+        if (placeIndex === -1) {
+            return;
+        }
+
+        showPlace(placeIndex);
+
     });
+
+});
+
+
+/*
+ * FRECCIA PRECEDENTE
+ */
+
+infoPrev.addEventListener("click", () => {
+
+    if (currentIndex <= 0) {
+        return;
+    }
+
+    showPlace(
+        currentIndex - 1,
+        false
+    );
+
+});
+
+
+/*
+ * FRECCIA SUCCESSIVA
+ */
+
+infoNext.addEventListener("click", () => {
+
+    if (
+        currentIndex === -1 ||
+        currentIndex >= placeKeys.length - 1
+    ) {
+        return;
+    }
+
+    showPlace(
+        currentIndex + 1,
+        false
+    );
 
 });

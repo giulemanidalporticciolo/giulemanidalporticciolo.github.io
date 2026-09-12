@@ -10,7 +10,8 @@ extra_css: sito/progetto/mappa-orientamento2.css
 
     <p>
         Il progetto visto in relazione ai luoghi e ai punti di riferimento
-        più conosciuti della zona. Tocca i punti della mappa per visualizzare i luoghi.
+        più conosciuti della zona. Tocca i punti della mappa per visualizzare
+        i luoghi.
     </p>
 </section>
 
@@ -74,6 +75,15 @@ extra_css: sito/progetto/mappa-orientamento2.css
 
     <div class="map-info" id="map-info">
 
+        <button
+            class="map-info-nav map-info-prev"
+            id="map-info-prev"
+            type="button"
+            aria-label="Luogo precedente"
+        >
+            <span></span>
+        </button>
+
         <img id="map-info-image" src="" alt="">
 
         <div class="map-info-content">
@@ -83,6 +93,15 @@ extra_css: sito/progetto/mappa-orientamento2.css
             <p id="map-info-description"></p>
 
         </div>
+
+        <button
+            class="map-info-nav map-info-next"
+            id="map-info-next"
+            type="button"
+            aria-label="Luogo successivo"
+        >
+            <span></span>
+        </button>
 
     </div>
 

@@ -244,7 +244,7 @@ infoPrev.addEventListener("click", () => {
     );
 
 });
-
+ 
 
 /*
  * SUCCESSIVO

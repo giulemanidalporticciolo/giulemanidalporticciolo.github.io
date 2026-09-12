@@ -15,7 +15,9 @@ extra_css: sito/progetto/mappa-orientamento.css
 </section>
 
 <section>
-    <div class="map-container">
+    <div class="map-container"
+      data-map-scale="1"
+      data-base-path="{{ 'sito/img/progetto/mappa-orientamento/' | relative_url }}">
 
         <img
             src="{{ 'sito/img/progetto/mappa-orientamento.png' | relative_url }}"

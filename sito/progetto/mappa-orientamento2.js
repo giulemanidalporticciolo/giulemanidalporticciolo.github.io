@@ -22,8 +22,33 @@ const markers =
 const mapContainer =
     document.getElementById("map-container");
 
+const mapCanvas =
+    document.getElementById("map-canvas");
+
 const mapPanCue =
     document.getElementById("map-pan-cue");
+
+
+/*
+ * SCALA DELLA MAPPA
+ *
+ * data-map-scale="1"
+ * = mappa a dimensione normale
+ *
+ * data-map-scale="1.8"
+ * = mappa larga 180%
+ */
+
+const mapScale =
+    parseFloat(
+        mapContainer.dataset.mapScale
+    ) || 1;
+
+mapCanvas.style.width =
+    `${mapScale * 100}%`;
+
+mapCanvas.style.minWidth =
+    `${mapScale * 100}%`;
 
 
 /*
@@ -58,6 +83,10 @@ let currentMarker = null;
 
 /*
  * CUE PANORAMICO
+ *
+ * Il cue compare solo se la mappa
+ * è realmente scrollabile e si trova
+ * all'inizio.
  */
 
 let mapPanCueShown = false;
@@ -74,7 +103,7 @@ function updateMapPanCue() {
 
     const isScrollable =
         mapContainer.scrollWidth >
-        mapContainer.clientWidth;
+        mapContainer.clientWidth + 1;
 
     const isAtStart =
         mapContainer.scrollLeft <= 1;
@@ -111,7 +140,35 @@ window.addEventListener(
     updateMapPanCue
 );
 
-updateMapPanCue();
+
+/*
+ * Aspetta che l'immagine abbia
+ * determinato le dimensioni reali.
+ */
+
+const mapImage =
+    mapCanvas.querySelector("img");
+
+if (mapImage) {
+
+    if (mapImage.complete) {
+
+        updateMapPanCue();
+
+    } else {
+
+        mapImage.addEventListener(
+            "load",
+            updateMapPanCue
+        );
+
+    }
+
+} else {
+
+    updateMapPanCue();
+
+}
 
 
 /*

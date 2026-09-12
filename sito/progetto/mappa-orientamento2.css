@@ -25,6 +25,7 @@
     position: relative;
     width: 100%;
     min-width: 100%;
+    overflow: hidden;
 }
 
 .map-canvas > img {
@@ -145,7 +146,7 @@
 .map-pan-cue {
     position: absolute;
     left: 50%;
-    bottom: 0px;
+    bottom: 0;
     width: 180px;
     height: 86px;
     transform: translateX(-50%);
@@ -194,8 +195,7 @@
 }
 
 
-/* MOVIMENTO DEL CERCHIO
-   DESTRA → SINISTRA → FADE */
+/* MOVIMENTO DEL CERCHIO */
 
 @keyframes cue-swipe {
 
@@ -222,7 +222,7 @@
 }
 
 
-/* PULSE DELL'ALPHA DELLA SCRITTA */
+/* PULSE DELLA SCRITTA */
 
 @keyframes cue-label-pulse {
 
@@ -361,13 +361,19 @@
     }
 
     .map-canvas {
-        width: 180%;
-        min-width: 180%;
+        width: 100%;
+        min-width: 100%;
     }
 
     .map-marker {
         width: 44px;
         height: 44px;
+    }
+
+    .map-pan-cue {
+        width: 180px;
+        height: 86px;
+        bottom: 0;
     }
 
     .cue-finger {

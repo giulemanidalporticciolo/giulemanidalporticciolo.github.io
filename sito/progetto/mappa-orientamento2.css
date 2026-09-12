@@ -51,6 +51,8 @@
     transform: translate(-50%, -50%);
     z-index: 10;
     touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
 }
 
 .map-marker::before {
@@ -256,6 +258,8 @@
     cursor: pointer;
     transform: translateY(-50%);
     z-index: 2;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
 }
 
 .map-info-nav::before {

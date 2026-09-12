@@ -210,13 +210,11 @@ function getNearestMarker(currentMarker, direction) {
         const dy = markerY - currentY;
 
         /*
-         * Per PREV consideriamo i marker a sinistra.
-         * Per NEXT quelli a destra.
+         * PREV: solo marker a sinistra.
+         * NEXT: solo marker a destra.
          *
-         * La distanza viene comunque calcolata
-         * realmente in 2D, quindi un marker leggermente
-         * più in alto/basso ma molto vicino viene preferito
-         * a uno molto più distante.
+         * Tra quelli nella direzione scelta
+         * viene preso quello con distanza 2D minore.
          */
 
         if (direction === "next" && dx <= 0) return;
@@ -233,34 +231,6 @@ function getNearestMarker(currentMarker, direction) {
             nearestMarker = marker;
         }
     });
-
-    /*
-     * Se non c'è nessun marker nella direzione richiesta,
-     * ricominciamo dall'altro lato.
-     */
-
-    if (!nearestMarker) {
-        markers.forEach(marker => {
-            if (marker === currentMarker) return;
-
-            const markerX = marker.offsetLeft;
-            const markerY = marker.offsetTop;
-
-            const dx = markerX - currentX;
-            const dy = markerY - currentY;
-
-            const distance =
-                Math.sqrt(
-                    (dx * dx) +
-                    (dy * dy)
-                );
-
-            if (distance < nearestDistance) {
-                nearestDistance = distance;
-                nearestMarker = marker;
-            }
-        });
-    }
 
     return nearestMarker;
 }
@@ -294,11 +264,26 @@ navButtons.forEach(button => {
                 ? "prev"
                 : "next";
 
-        const nextMarker =
+        let nextMarker =
             getNearestMarker(
                 currentMarker,
                 direction
             );
+
+        /*
+         * Se non c'è nessun marker nella direzione,
+         * facciamo il giro dall'estremo opposto.
+         */
+
+        if (!nextMarker) {
+            const markerArray =
+                Array.from(markers);
+
+            nextMarker =
+                direction === "next"
+                    ? markerArray[0]
+                    : markerArray[markerArray.length - 1];
+        }
 
         if (!nextMarker) return;
 

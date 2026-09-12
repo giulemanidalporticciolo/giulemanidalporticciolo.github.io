@@ -32,43 +32,23 @@ extra_css: sito/progetto/mappa-orientamento2.css
                     alt="Mappa di orientamento del progetto con i principali punti di riferimento della zona"
                 >
 
-                <button
-                    class="map-marker marker-isoletta"
-                    aria-label="Bar Isoletta"
-                    data-place="isoletta"
-                >
+                <button class="map-marker marker-isoletta" aria-label="Bar Isoletta" data-place="isoletta">
                     <span></span>
                 </button>
 
-                <button
-                    class="map-marker marker-waqas"
-                    aria-label="Waqas Kebab"
-                    data-place="waqas"
-                >
+                <button class="map-marker marker-waqas" aria-label="Waqas Kebab" data-place="waqas">
                     <span></span>
                 </button>
 
-                <button
-                    class="map-marker marker-quo-vadis"
-                    aria-label="Pizzeria Quo Vadis"
-                    data-place="quo-vadis"
-                >
+                <button class="map-marker marker-quo-vadis" aria-label="Pizzeria Quo Vadis" data-place="quo-vadis">
                     <span></span>
                 </button>
 
-                <button
-                    class="map-marker marker-piazzetta"
-                    aria-label="Piazzetta del Porticciolo"
-                    data-place="piazzetta"
-                >
+                <button class="map-marker marker-piazzetta" aria-label="Piazzetta del Porticciolo" data-place="piazzetta">
                     <span></span>
                 </button>
 
-                <button
-                    class="map-marker marker-spiaggetta"
-                    aria-label="Spiaggetta del Porticciolo"
-                    data-place="spiaggetta"
-                >
+                <button class="map-marker marker-spiaggetta" aria-label="Spiaggetta del Porticciolo" data-place="spiaggetta">
                     <span></span>
                 </button>
 
@@ -76,11 +56,7 @@ extra_css: sito/progetto/mappa-orientamento2.css
 
         </div>
 
-        <div
-            class="map-pan-cue"
-            id="map-pan-cue"
-            aria-hidden="true"
-        >
+        <div class="map-pan-cue" id="map-pan-cue" aria-hidden="true">
             <span class="cue-finger"></span>
             <span class="cue-label">SCORRI PER ESPLORARE</span>
         </div>
@@ -97,29 +73,37 @@ extra_css: sito/progetto/mappa-orientamento2.css
                 alt=""
             >
 
-            <button
-                class="map-info-nav map-info-prev"
-                id="map-info-prev"
-                type="button"
-                aria-label="Luogo precedente"
-            >
-                <span></span>
-            </button>
-
-            <button
-                class="map-info-nav map-info-next"
-                id="map-info-next"
-                type="button"
-                aria-label="Luogo successivo"
-            >
-                <span></span>
-            </button>
-
         </div>
 
         <div class="map-info-content">
 
-            <h2 id="map-info-title"></h2>
+            <div class="map-info-heading">
+
+                <h2 id="map-info-title"></h2>
+
+                <div class="map-info-navs">
+
+                    <button
+                        class="map-info-nav map-info-prev"
+                        id="map-info-prev"
+                        type="button"
+                        aria-label="Luogo precedente"
+                    >
+                        <span></span>
+                    </button>
+
+                    <button
+                        class="map-info-nav map-info-next"
+                        id="map-info-next"
+                        type="button"
+                        aria-label="Luogo successivo"
+                    >
+                        <span></span>
+                    </button>
+
+                </div>
+
+            </div>
 
             <p id="map-info-description"></p>
 

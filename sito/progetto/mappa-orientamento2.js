@@ -85,6 +85,12 @@ markers.forEach(marker => {
 
         event.stopPropagation();
 
+        /*
+         * Nasconde il cue quando viene selezionato un punto.
+         */
+
+        mapPanCue.classList.remove("visible");
+
         const place =
             places[marker.dataset.place];
 

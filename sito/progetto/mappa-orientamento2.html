@@ -17,16 +17,16 @@ extra_css: sito/progetto/mappa-orientamento2.css
 <section>
 
     <div
+        class="map-pan-cue"
+        id="map-pan-cue"
+        aria-hidden="true"
+    ></div>
+
+    <div
         class="map-container"
         id="map-container"
         data-base-path="{{ 'sito/img/progetto/mappa-orientamento/' | relative_url }}"
     >
-
-        <div
-            class="map-pan-cue"
-            id="map-pan-cue"
-            aria-hidden="true"
-        ></div>
 
         <div class="map-canvas" id="map-canvas">
 

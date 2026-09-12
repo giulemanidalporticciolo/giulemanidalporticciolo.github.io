@@ -85,25 +85,18 @@ markers.forEach(marker => {
 
         event.stopPropagation();
 
-
         const place =
             places[marker.dataset.place];
-
 
         if (!place) {
             return;
         }
 
-
         markers.forEach(item => {
-
             item.classList.remove("active");
-
         });
 
-
         marker.classList.add("active");
-
 
         infoImage.src =
             place.image;
@@ -116,7 +109,6 @@ markers.forEach(marker => {
 
         infoDescription.textContent =
             place.description;
-
 
         info.classList.add("visible");
 
@@ -131,7 +123,6 @@ markers.forEach(marker => {
             const mapTop =
                 mapContainer.getBoundingClientRect().top +
                 window.scrollY;
-
 
             window.scrollTo({
 

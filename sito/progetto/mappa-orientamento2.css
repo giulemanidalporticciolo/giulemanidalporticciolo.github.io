@@ -21,6 +21,11 @@
     display: none;
 }
 
+.map-container,
+.map-info-track {
+    scroll-behavior: auto !important;
+}
+
 .map-canvas {
     position: relative;
     width: 100%;

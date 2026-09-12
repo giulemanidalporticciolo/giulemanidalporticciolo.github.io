@@ -13,7 +13,7 @@ mapCanvas.style.minWidth = `${mapScale * 100}%`;
 
 
 /* --------------------------------------------------
-   CUE PAN
+   CUE PAN MAPPA
 -------------------------------------------------- */
 
 let mapPanCueShown = false;
@@ -73,40 +73,75 @@ function showPlace(marker, shouldScrollPage = true) {
 
     if (!card) return;
 
+    const infoWasVisible =
+        info.classList.contains("visible");
+
+    /* --------------------------------------------------
+       MARKER ATTIVO
+    -------------------------------------------------- */
+
     markers.forEach(item => {
         item.classList.remove("active");
     });
 
     marker.classList.add("active");
 
+
+    /* --------------------------------------------------
+       CUE
+    -------------------------------------------------- */
+
     mapPanCueShown = true;
     mapPanCue.classList.remove("visible");
 
+
+    /* --------------------------------------------------
+       AREA SCHEDE
+
+       Questo è lo SCROLL ORIZZONTALE della scheda.
+       Primo click: nessuna animazione.
+       Click successivi: animazione.
+    -------------------------------------------------- */
+
     info.classList.add("visible");
 
+    if (!infoWasVisible) {
+        infoTrack.scrollLeft = card.offsetLeft;
+    } else {
+        infoTrack.scrollTo({
+            left: card.offsetLeft,
+            behavior: "smooth"
+        });
+    }
 
-    /* Scorri la scheda */
-    infoTrack.scrollTo({
-        left: card.offsetLeft,
-        behavior: "smooth"
-    });
 
+    /* --------------------------------------------------
+       MAPPA
 
-    /* Centra il marker nella mappa */
+       Questo è lo SCROLL ORIZZONTALE della mappa.
+       Nessuna animazione.
+    -------------------------------------------------- */
+
     const markerLeft = marker.offsetLeft;
 
-    const targetScroll =
+    const targetMapScroll =
         markerLeft -
         (mapContainer.clientWidth / 2);
 
-    mapContainer.scrollTo({
-        left: Math.max(0, targetScroll),
-        behavior: "smooth"
-    });
+    mapContainer.scrollLeft =
+        Math.max(0, targetMapScroll);
 
 
-    /* Centra verticalmente mappa + scheda
-       solo se il blocco non è già completamente visibile */
+    /* --------------------------------------------------
+       PAGINA
+
+       Questo è lo SCROLL VERTICALE dell'intera pagina.
+       Serve a centrare verticalmente il blocco
+       MAPPA + SCHEDA nel viewport.
+
+       È SEMPRE ANIMATO.
+    -------------------------------------------------- */
+
     if (shouldScrollPage) {
         setTimeout(() => {
             const mapRect =
@@ -138,13 +173,13 @@ function showPlace(marker, shouldScrollPage = true) {
                 blockBottom <= viewportHeight;
 
             if (!isFullyVisible) {
-                const targetTop =
+                const targetPageScroll =
                     blockTop +
                     window.scrollY -
                     ((viewportHeight - blockHeight) / 2);
 
                 window.scrollTo({
-                    top: Math.max(0, targetTop),
+                    top: Math.max(0, targetPageScroll),
                     behavior: "smooth"
                 });
             }
@@ -207,6 +242,11 @@ navButtons.forEach(button => {
 
         if (!marker) return;
 
+        /*
+         * Le frecce cambiano solo la scheda:
+         * scroll orizzontale della scheda animato,
+         * nessuno scroll verticale della pagina.
+         */
         showPlace(marker, false);
     });
 });

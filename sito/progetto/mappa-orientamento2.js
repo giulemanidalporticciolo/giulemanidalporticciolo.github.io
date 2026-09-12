@@ -209,14 +209,6 @@ function getNearestMarker(currentMarker, direction) {
         const dx = markerX - currentX;
         const dy = markerY - currentY;
 
-        /*
-         * PREV: solo marker a sinistra.
-         * NEXT: solo marker a destra.
-         *
-         * Tra quelli nella direzione scelta
-         * viene preso quello con distanza 2D minore.
-         */
-
         if (direction === "next" && dx <= 0) return;
         if (direction === "prev" && dx >= 0) return;
 
@@ -264,16 +256,11 @@ navButtons.forEach(button => {
                 ? "prev"
                 : "next";
 
-        let nextMarker =
+        const nextMarker =
             getNearestMarker(
                 currentMarker,
                 direction
             );
-
-        /*
-         * Se non c'è nessun marker nella direzione,
-         * facciamo il giro dall'estremo opposto.
-         */
 
         if (!nextMarker) {
             const markerArray =

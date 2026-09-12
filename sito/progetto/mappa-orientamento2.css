@@ -178,6 +178,7 @@
 
 .map-pan-cue.visible::before,
 .map-pan-cue.visible::after {
+    animation: pan-cue-move 1.8s ease-in-out infinite;
 }
 
 @keyframes pan-cue-move {

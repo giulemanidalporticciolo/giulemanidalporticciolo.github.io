@@ -138,11 +138,11 @@
 
 .map-pan-cue {
     position: absolute;
-    top: 50%;
     left: 50%;
+    bottom: 20px;
     width: 44px;
     height: 20px;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     z-index: 20;
     pointer-events: none;
     opacity: 0;

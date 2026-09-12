@@ -70,23 +70,23 @@ markers.forEach(marker => {
 
 
         /*
-         * Porta sempre la mappa all'inizio
-         * dello schermo.
+         * Porta sempre la mappa nella stessa posizione,
+         * leggermente sotto il bordo superiore dello schermo.
          */
 
         setTimeout(() => {
 
+            const mapContainer =
+                document.getElementById("map-container");
+
             const mapTop =
-                document
-                    .getElementById("map-container")
-                    .getBoundingClientRect()
-                    .top +
+                mapContainer.getBoundingClientRect().top +
                 window.scrollY;
 
 
             window.scrollTo({
 
-                top: mapTop,
+                top: mapTop - 30,
 
                 behavior: "smooth"
 

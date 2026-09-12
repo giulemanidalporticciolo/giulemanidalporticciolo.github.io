@@ -181,17 +181,13 @@
 }
 
 @keyframes pan-cue-move {
-
     0%, 100% {
-        translate: 0 0;
+        translate: 12px 0;
     }
-
     50% {
-        translate: -8px 0;
+        translate: -4px 0;
     }
-
 }
-
 
 /* POPUP */
 

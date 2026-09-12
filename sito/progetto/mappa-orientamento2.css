@@ -244,6 +244,7 @@
 /* INFO */
 
 .map-info {
+    position: relative;
     display: none;
     width: 700px;
     max-width: 100%;
@@ -314,10 +315,15 @@
 /* FRECCE INFO */
 
 .map-info-navs {
+    position: absolute;
+    top: 0;
+    right: 0;
     display: flex;
     flex-shrink: 0;
     gap: 12px;
-    margin-top: 0;
+    padding-left: 10px;
+    background: #fff;
+    z-index: 5;
 }
 
 .map-info-nav {
@@ -326,7 +332,7 @@
     height: 32px;
     padding: 0;
     border: 0;
-    background: transparent;
+    background: #fff;
     cursor: pointer;
     flex-shrink: 0;
     touch-action: manipulation;
@@ -433,13 +439,17 @@
     }
 
     .map-info-navs {
-        margin-top: 0;
+        top: 258px;
+        right: 0;
         gap: 12px;
+        padding-left: 10px;
+        background: #fff;
     }
 
     .map-info-nav {
         width: 28px;
         height: 32px;
+        background: #fff;
         touch-action: manipulation;
     }
 

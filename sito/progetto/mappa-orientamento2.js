@@ -234,6 +234,7 @@ function getNearestMarker(currentMarker, direction) {
 
 function getExtremeMarker(direction) {
     let extremeMarker = null;
+
     let extremeX =
         direction === "next"
             ? Infinity
@@ -260,6 +261,33 @@ function getExtremeMarker(direction) {
 
 
 /* --------------------------------------------------
+   SCHEDA ATTUALMENTE VISIBILE
+-------------------------------------------------- */
+
+function getCurrentCard() {
+    if (!cards.length) return null;
+
+    const currentScroll =
+        infoTrack.scrollLeft;
+
+    let currentCard = cards[0];
+    let nearestDistance = Infinity;
+
+    cards.forEach(card => {
+        const distance =
+            Math.abs(card.offsetLeft - currentScroll);
+
+        if (distance < nearestDistance) {
+            nearestDistance = distance;
+            currentCard = card;
+        }
+    });
+
+    return currentCard;
+}
+
+
+/* --------------------------------------------------
    FRECCE SCHEDE
 -------------------------------------------------- */
 
@@ -270,14 +298,23 @@ navButtons.forEach(button => {
     button.addEventListener("click", event => {
         event.stopPropagation();
 
-        const card =
-            button.closest(".map-info-card");
+        /*
+         * Le frecce sono fuori dalle schede,
+         * quindi non possiamo più usare
+         * button.closest(".map-info-card").
+         *
+         * Ricaviamo la scheda attualmente visualizzata
+         * direttamente dalla posizione dello scroll.
+         */
 
-        if (!card) return;
+        const currentCard =
+            getCurrentCard();
+
+        if (!currentCard) return;
 
         const currentMarker =
             document.querySelector(
-                `.map-marker[data-place="${card.dataset.place}"]`
+                `.map-marker[data-place="${currentCard.dataset.place}"]`
             );
 
         if (!currentMarker) return;

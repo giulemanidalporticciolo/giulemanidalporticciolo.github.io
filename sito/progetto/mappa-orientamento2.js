@@ -86,7 +86,7 @@ markers.forEach(marker => {
 
             window.scrollTo({
 
-                top: mapTop - 30,
+                top: mapTop - 20,
 
                 behavior: "smooth"
 

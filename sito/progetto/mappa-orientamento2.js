@@ -224,7 +224,7 @@ function showPlace(marker, shouldScrollPage = true) {
 
             window.scrollTo({
 
-                top: mapTop - 100,
+                top: mapTop - 80,
 
                 behavior: "smooth"
 

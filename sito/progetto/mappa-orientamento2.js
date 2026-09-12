@@ -9,9 +9,6 @@ const infoTitle =
 const infoDescription =
     document.getElementById("map-info-description");
 
-const infoClose =
-    document.getElementById("map-info-close");
-
 const markers =
     document.querySelectorAll(".map-marker");
 
@@ -101,24 +98,6 @@ markers.forEach(marker => {
             }, 50);
 
         }
-
-    });
-
-});
-
-
-/*
- * CHIUDI POPUP
- */
-
-infoClose.addEventListener("click", () => {
-
-    info.classList.remove("visible");
-
-
-    markers.forEach(marker => {
-
-        marker.classList.remove("active");
 
     });
 

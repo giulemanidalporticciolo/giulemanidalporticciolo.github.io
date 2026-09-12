@@ -1,11 +1,13 @@
 .map-wrapper {
     position: relative;
+    width: 900px;
+    max-width: 100%;
 }
 
 .map-container {
     position: relative;
-    width: 900px;
-    max-width: 100%;
+    z-index: 1;
+    width: 100%;
     margin: 40px 0 20px;
     background: #080d3d;
     border-radius: 12px;
@@ -114,11 +116,6 @@
 .marker-waqas {
     left: 55%;
     top: 15%;
-}
-
-.marker-hotel {
-    left: 57%;
-    top: 26%;
 }
 
 .marker-quo-vadis {
@@ -254,6 +251,10 @@
 /* MOBILE */
 
 @media (max-width: 768px) {
+
+    .map-wrapper {
+        width: 100%;
+    }
 
     .map-container {
         width: 100%;

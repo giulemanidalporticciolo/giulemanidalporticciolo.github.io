@@ -139,6 +139,9 @@
     position: absolute;
     top: 50%;
     left: 50%;
+    display: flex;
+    align-items: center;
+    gap: 18px;
     transform: translate(-50%, -50%);
     z-index: 20;
     pointer-events: none;
@@ -150,28 +153,49 @@
     opacity: 1;
 }
 
-.map-pan-cue::before {
-    content: "←  →";
+.map-pan-cue::before,
+.map-pan-cue::after {
+    content: "";
     display: block;
-    padding: 8px 12px;
-    border-radius: 20px;
-    background: rgba(0, 0, 0, 0.35);
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.2rem;
-    line-height: 1;
-    letter-spacing: 2px;
-    animation: pan-cue 1.8s ease-in-out infinite;
+    width: 13px;
+    height: 13px;
+    border-top: 2px solid rgba(255, 255, 255, 0.9);
+    border-right: 2px solid rgba(255, 255, 255, 0.9);
 }
 
-@keyframes pan-cue {
+.map-pan-cue::before {
+    transform: rotate(-135deg);
+    animation: pan-cue-left 1.8s ease-in-out infinite;
+}
+
+.map-pan-cue::after {
+    transform: rotate(45deg);
+    animation: pan-cue-right 1.8s ease-in-out infinite;
+}
+
+@keyframes pan-cue-left {
 
     0%, 100% {
-        transform: translateX(0);
-        opacity: 0.65;
+        transform: translateX(0) rotate(-135deg);
+        opacity: 0.55;
     }
 
     50% {
-        transform: translateX(-5px);
+        transform: translateX(-5px) rotate(-135deg);
+        opacity: 1;
+    }
+
+}
+
+@keyframes pan-cue-right {
+
+    0%, 100% {
+        transform: translateX(0) rotate(45deg);
+        opacity: 0.55;
+    }
+
+    50% {
+        transform: translateX(5px) rotate(45deg);
         opacity: 1;
     }
 

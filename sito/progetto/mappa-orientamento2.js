@@ -33,12 +33,6 @@ function sortCardsByMarkerPosition() {
         const xA = markerA.offsetLeft;
         const xB = markerB.offsetLeft;
 
-        /*
-         * Prima ordiniamo da sinistra a destra.
-         * In caso di stessa posizione orizzontale,
-         * usiamo la posizione verticale come secondo criterio.
-         */
-
         if (xA !== xB) {
             return xA - xB;
         }
@@ -103,6 +97,58 @@ if (mapImage) {
 
 
 /* --------------------------------------------------
+   ATTIVA MARKER CORRISPONDENTE ALLA SCHEDA
+-------------------------------------------------- */
+
+let lastActivatedCard = null;
+
+function activateMarkerForCard(card) {
+    if (!card) return;
+
+    const key = card.dataset.place;
+
+    if (!key) return;
+
+    const marker = document.querySelector(
+        `.map-marker[data-place="${key}"]`
+    );
+
+    if (!marker) return;
+
+    if (lastActivatedCard === card) return;
+
+    lastActivatedCard = card;
+
+    markers.forEach(item => {
+        item.classList.remove("active");
+    });
+
+    marker.classList.add("active");
+}
+
+
+/* --------------------------------------------------
+   RILEVA QUANDO LO SCROLL DELLE SCHEDE È TERMINATO
+-------------------------------------------------- */
+
+let cardScrollTimer = null;
+
+function updateMarkerAfterCardScroll() {
+    clearTimeout(cardScrollTimer);
+
+    cardScrollTimer = setTimeout(() => {
+        const currentCard = getCurrentCard();
+
+        if (currentCard) {
+            activateMarkerForCard(currentCard);
+        }
+    }, 120);
+}
+
+infoTrack.addEventListener("scroll", updateMarkerAfterCardScroll);
+
+
+/* --------------------------------------------------
    MOSTRA LUOGO
 -------------------------------------------------- */
 
@@ -129,10 +175,12 @@ function showPlace(marker, shouldScrollPage = true) {
 
     marker.classList.add("active");
 
+    lastActivatedCard = card;
+
 
     /* --------------------------------------------------
        CUE
-    -------------------------------------------------- */
+-------------------------------------------------- */
 
     mapPanCueShown = true;
     mapPanCue.classList.remove("visible");
@@ -140,7 +188,7 @@ function showPlace(marker, shouldScrollPage = true) {
 
     /* --------------------------------------------------
        AREA SCHEDE
-    -------------------------------------------------- */
+-------------------------------------------------- */
 
     info.classList.add("visible");
 
@@ -156,7 +204,7 @@ function showPlace(marker, shouldScrollPage = true) {
 
     /* --------------------------------------------------
        MAPPA
-    -------------------------------------------------- */
+-------------------------------------------------- */
 
     const markerLeft = marker.offsetLeft;
 
@@ -170,7 +218,7 @@ function showPlace(marker, shouldScrollPage = true) {
 
     /* --------------------------------------------------
        PAGINA
-    -------------------------------------------------- */
+-------------------------------------------------- */
 
     if (shouldScrollPage) {
         setTimeout(() => {
@@ -236,6 +284,8 @@ markers.forEach(marker => {
 -------------------------------------------------- */
 
 function getCurrentCard() {
+    if (!cards.length) return null;
+
     const currentScroll =
         infoTrack.scrollLeft;
 
@@ -257,54 +307,6 @@ function getCurrentCard() {
 
 
 /* --------------------------------------------------
-   SCHEDA SUCCESSIVA / PRECEDENTE
--------------------------------------------------- */
-
-function getAdjacentMarker(currentMarker, direction) {
-    /*
-     * Le schede sono già state ordinate nel DOM
-     * in base alla posizione dei marker.
-     *
-     * Quindi usiamo direttamente quell'ordine.
-     */
-
-    const currentCard =
-        document.querySelector(
-            `.map-info-card[data-place="${currentMarker.dataset.place}"]`
-        );
-
-    if (!currentCard) return null;
-
-    const cardIndex =
-        Array.from(infoTrack.children).indexOf(currentCard);
-
-    if (cardIndex === -1) return null;
-
-    const totalCards =
-        infoTrack.children.length;
-
-    let nextIndex;
-
-    if (direction === "next") {
-        nextIndex =
-            (cardIndex + 1) % totalCards;
-    } else {
-        nextIndex =
-            (cardIndex - 1 + totalCards) % totalCards;
-    }
-
-    const nextCard =
-        infoTrack.children[nextIndex];
-
-    if (!nextCard) return null;
-
-    return document.querySelector(
-        `.map-marker[data-place="${nextCard.dataset.place}"]`
-    );
-}
-
-
-/* --------------------------------------------------
    FRECCE SCHEDE
 -------------------------------------------------- */
 
@@ -320,26 +322,37 @@ navButtons.forEach(button => {
 
         if (!currentCard) return;
 
-        const currentMarker =
-            document.querySelector(
-                `.map-marker[data-place="${currentCard.dataset.place}"]`
-            );
+        const cardIndex =
+            Array.from(infoTrack.children).indexOf(currentCard);
 
-        if (!currentMarker) return;
+        if (cardIndex === -1) return;
+
+        const totalCards =
+            infoTrack.children.length;
 
         const direction =
             button.classList.contains("map-info-prev")
                 ? "prev"
                 : "next";
 
-        const nextMarker =
-            getAdjacentMarker(
-                currentMarker,
-                direction
-            );
+        let nextIndex;
 
-        if (!nextMarker) return;
+        if (direction === "next") {
+            nextIndex =
+                (cardIndex + 1) % totalCards;
+        } else {
+            nextIndex =
+                (cardIndex - 1 + totalCards) % totalCards;
+        }
 
-        showPlace(nextMarker, false);
+        const nextCard =
+            infoTrack.children[nextIndex];
+
+        if (!nextCard) return;
+
+        infoTrack.scrollTo({
+            left: nextCard.offsetLeft,
+            behavior: "smooth"
+        });
     });
 });

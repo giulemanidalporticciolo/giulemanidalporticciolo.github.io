@@ -64,6 +64,14 @@ let mapPanCueShown = false;
 
 function updateMapPanCue() {
 
+    if (mapPanCueShown) {
+
+        mapPanCue.classList.remove("visible");
+
+        return;
+
+    }
+
     const isScrollable =
         mapContainer.scrollWidth >
         mapContainer.clientWidth;
@@ -73,10 +81,15 @@ function updateMapPanCue() {
 
     if (
         isScrollable &&
-        isAtStart &&
-        !mapPanCueShown
+        isAtStart
     ) {
+
         mapPanCue.classList.add("visible");
+
+    } else {
+
+        mapPanCue.classList.remove("visible");
+
     }
 
 }
@@ -119,10 +132,14 @@ function showPlace(marker, shouldScrollPage = true) {
 
     currentMarker = marker;
 
+    mapPanCueShown = true;
+
     mapPanCue.classList.remove("visible");
 
     markers.forEach(item => {
+
         item.classList.remove("active");
+
     });
 
     marker.classList.add("active");

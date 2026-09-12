@@ -34,6 +34,8 @@ const places =
  * CUE PANORAMICO
  */
 
+let mapPanCueShown = false;
+
 function updateMapPanCue() {
 
     const isScrollable =
@@ -43,18 +45,27 @@ function updateMapPanCue() {
     const isAtStart =
         mapContainer.scrollLeft <= 1;
 
-    if (isScrollable && isAtStart) {
+    if (
+        isScrollable &&
+        isAtStart &&
+        !mapPanCueShown
+    ) {
         mapPanCue.classList.add("visible");
-    } else {
-        mapPanCue.classList.remove("visible");
     }
 
 }
 
-mapContainer.addEventListener(
-    "scroll",
-    updateMapPanCue
-);
+mapContainer.addEventListener("scroll", () => {
+
+    if (mapContainer.scrollLeft > 1) {
+
+        mapPanCueShown = true;
+
+        mapPanCue.classList.remove("visible");
+
+    }
+
+});
 
 window.addEventListener(
     "resize",

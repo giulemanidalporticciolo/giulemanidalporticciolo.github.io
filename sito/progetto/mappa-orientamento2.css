@@ -84,16 +84,19 @@
     z-index: 1;
 }
 
-.map-marker.active::after {
-    opacity: 0;
-}
-
 .map-marker.active::before {
     width: 18px;
     height: 18px;
-    background: #174a8b;
+    background: #e4572e;
     border: 3px solid #fff;
-    box-shadow: 0 0 0 3px rgba(23, 74, 139, 0.3);
+    box-shadow: 0 0 0 3px rgba(228, 87, 46, 0.3);
+}
+
+.map-marker.active::after {
+    opacity: 1;
+    width: 18px;
+    height: 18px;
+    animation: marker-pulse-active 2s infinite;
 }
 
 @keyframes marker-pulse {
@@ -107,6 +110,20 @@
 
     100% {
         box-shadow: 0 0 0 0 rgba(30, 90, 168, 0);
+    }
+}
+
+@keyframes marker-pulse-active {
+    0% {
+        box-shadow: 0 0 0 0 rgba(228, 87, 46, 0.55);
+    }
+
+    70% {
+        box-shadow: 0 0 0 14px rgba(228, 87, 46, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(228, 87, 46, 0);
     }
 }
 

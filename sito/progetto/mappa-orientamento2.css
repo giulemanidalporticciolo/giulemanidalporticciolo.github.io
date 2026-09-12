@@ -1,8 +1,12 @@
+.map-wrapper {
+    position: relative;
+}
+
 .map-container {
     position: relative;
     width: 900px;
     max-width: 100%;
-    margin: 0 0 20px;
+    margin: 40px 0 20px;
     background: #080d3d;
     border-radius: 12px;
     overflow-x: auto;
@@ -136,21 +140,20 @@
 /* CUE PANORAMICO */
 
 .map-pan-cue {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
     width: 44px;
     height: 20px;
-    margin: 0 auto 12px;
-    position: relative;
-    opacity: 0;
+    transform: translate(-50%, -50%);
+    z-index: 20;
     pointer-events: none;
+    opacity: 0;
     transition: opacity 0.3s ease;
 }
 
 .map-pan-cue.visible {
     opacity: 1;
-    animation: pan-cue 1.8s ease-in-out infinite;
 }
 
 .map-pan-cue::before,
@@ -161,8 +164,8 @@
     width: 13px;
     height: 13px;
     margin-top: -6.5px;
-    border-top: 2px solid rgba(30, 30, 30, 0.7);
-    border-right: 2px solid rgba(30, 30, 30, 0.7);
+    border-top: 2px solid rgba(255, 255, 255, 0.9);
+    border-right: 2px solid rgba(255, 255, 255, 0.9);
 }
 
 .map-pan-cue::before {
@@ -175,14 +178,19 @@
     transform: rotate(45deg);
 }
 
-@keyframes pan-cue {
+.map-pan-cue.visible::before,
+.map-pan-cue.visible::after {
+    animation: pan-cue-move 1.8s ease-in-out infinite;
+}
+
+@keyframes pan-cue-move {
 
     0%, 100% {
-        transform: translateX(0);
+        translate: 0 0;
     }
 
     50% {
-        transform: translateX(-10px);
+        translate: -8px 0;
     }
 
 }
@@ -249,7 +257,7 @@
 
     .map-container {
         width: 100%;
-        margin-top: 0;
+        margin-top: 30px;
         margin-bottom: 20px;
     }
 
@@ -261,10 +269,6 @@
     .map-marker {
         width: 44px;
         height: 44px;
-    }
-
-    .map-pan-cue {
-        margin-bottom: 10px;
     }
 
     .map-info {

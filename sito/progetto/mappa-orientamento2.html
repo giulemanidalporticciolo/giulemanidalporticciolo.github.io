@@ -16,54 +16,58 @@ extra_css: sito/progetto/mappa-orientamento2.css
 
 <section>
 
-    <div
-        class="map-pan-cue"
-        id="map-pan-cue"
-        aria-hidden="true"
-    ></div>
+    <div class="map-wrapper">
 
-    <div
-        class="map-container"
-        id="map-container"
-        data-base-path="{{ 'sito/img/progetto/mappa-orientamento/' | relative_url }}"
-    >
+        <div
+            class="map-pan-cue"
+            id="map-pan-cue"
+            aria-hidden="true"
+        ></div>
 
-        <div class="map-canvas" id="map-canvas">
+        <div
+            class="map-container"
+            id="map-container"
+            data-base-path="{{ 'sito/img/progetto/mappa-orientamento/' | relative_url }}"
+        >
 
-            <img
-                src="{{ 'sito/img/progetto/mappa-orientamento.png' | relative_url }}"
-                alt="Mappa di orientamento del progetto con i principali punti di riferimento della zona"
-            >
+            <div class="map-canvas" id="map-canvas">
 
-            <button class="map-marker marker-isoletta"
-                    aria-label="Bar Isoletta"
-                    data-place="isoletta">
-                <span></span>
-            </button>
+                <img
+                    src="{{ 'sito/img/progetto/mappa-orientamento.png' | relative_url }}"
+                    alt="Mappa di orientamento del progetto con i principali punti di riferimento della zona"
+                >
 
-            <button class="map-marker marker-waqas"
-                    aria-label="Waqas Kebab"
-                    data-place="waqas">
-                <span></span>
-            </button>
+                <button class="map-marker marker-isoletta"
+                        aria-label="Bar Isoletta"
+                        data-place="isoletta">
+                    <span></span>
+                </button>
 
-            <button class="map-marker marker-quo-vadis"
-                    aria-label="Pizzeria Quo Vadis"
-                    data-place="quo-vadis">
-                <span></span>
-            </button>
+                <button class="map-marker marker-waqas"
+                        aria-label="Waqas Kebab"
+                        data-place="waqas">
+                    <span></span>
+                </button>
 
-            <button class="map-marker marker-piazzetta"
-                    aria-label="Piazzetta del Porticciolo"
-                    data-place="piazzetta">
-                <span></span>
-            </button>
+                <button class="map-marker marker-quo-vadis"
+                        aria-label="Pizzeria Quo Vadis"
+                        data-place="quo-vadis">
+                    <span></span>
+                </button>
 
-            <button class="map-marker marker-spiaggetta"
-                    aria-label="Spiaggetta del Porticciolo"
-                    data-place="spiaggetta">
-                <span></span>
-            </button>
+                <button class="map-marker marker-piazzetta"
+                        aria-label="Piazzetta del Porticciolo"
+                        data-place="piazzetta">
+                    <span></span>
+                </button>
+
+                <button class="map-marker marker-spiaggetta"
+                        aria-label="Spiaggetta del Porticciolo"
+                        data-place="spiaggetta">
+                    <span></span>
+                </button>
+
+            </div>
 
         </div>
 

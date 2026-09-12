@@ -35,10 +35,25 @@ const places =
         document.getElementById("map-places").textContent
     );
 
-const placeKeys =
-    Object.keys(places);
 
-let currentIndex = -1;
+/*
+ * ORDINE DEI MARKER
+ *
+ * L'ordine viene determinato dalla posizione
+ * orizzontale effettiva dei marker nella mappa.
+ */
+
+const markerOrder =
+    Array.from(markers).sort((a, b) => {
+
+        return (
+            parseFloat(getComputedStyle(a).left) -
+            parseFloat(getComputedStyle(b).left)
+        );
+
+    });
+
+let currentMarker = null;
 
 
 /*
@@ -90,14 +105,10 @@ updateMapPanCue();
  * MOSTRA LUOGO
  */
 
-function showPlace(index, shouldScrollPage = true) {
-
-    if (index < 0 || index >= placeKeys.length) {
-        return;
-    }
+function showPlace(marker, shouldScrollPage = true) {
 
     const key =
-        placeKeys[index];
+        marker.dataset.place;
 
     const place =
         places[key];
@@ -106,19 +117,15 @@ function showPlace(index, shouldScrollPage = true) {
         return;
     }
 
-    currentIndex = index;
+    currentMarker = marker;
 
     mapPanCue.classList.remove("visible");
 
-    markers.forEach(marker => {
-
-        marker.classList.remove("active");
-
-        if (marker.dataset.place === key) {
-            marker.classList.add("active");
-        }
-
+    markers.forEach(item => {
+        item.classList.remove("active");
     });
+
+    marker.classList.add("active");
 
     infoImage.src =
         place.image;
@@ -136,33 +143,41 @@ function showPlace(index, shouldScrollPage = true) {
 
 
     /*
-     * Porta il marker al centro della mappa.
+     * Aggiorna le frecce.
      */
 
-    const marker =
-        document.querySelector(
-            `.map-marker[data-place="${key}"]`
-        );
+    const position =
+        markerOrder.indexOf(marker);
 
-    if (marker) {
+    infoPrev.disabled =
+        position <= 0;
 
-        const markerLeft =
-            marker.offsetLeft;
-
-        const targetScroll =
-            markerLeft -
-            (mapContainer.clientWidth / 2);
-
-        mapContainer.scrollTo({
-            left: Math.max(0, targetScroll),
-            behavior: "smooth"
-        });
-
-    }
+    infoNext.disabled =
+        position >= markerOrder.length - 1;
 
 
     /*
-     * Porta la mappa nella stessa posizione
+     * Porta il marker al centro della mappa.
+     */
+
+    const markerLeft =
+        marker.offsetLeft;
+
+    const targetScroll =
+        markerLeft -
+        (mapContainer.clientWidth / 2);
+
+    mapContainer.scrollTo({
+
+        left: Math.max(0, targetScroll),
+
+        behavior: "smooth"
+
+    });
+
+
+    /*
+     * Porta la mappa nella stessa posizione,
      * leggermente sotto il bordo superiore dello schermo.
      */
 
@@ -193,23 +208,13 @@ function showPlace(index, shouldScrollPage = true) {
  * MARKER
  */
 
-markers.forEach((marker, index) => {
+markers.forEach(marker => {
 
     marker.addEventListener("click", event => {
 
         event.stopPropagation();
 
-        const key =
-            marker.dataset.place;
-
-        const placeIndex =
-            placeKeys.indexOf(key);
-
-        if (placeIndex === -1) {
-            return;
-        }
-
-        showPlace(placeIndex);
+        showPlace(marker);
 
     });
 
@@ -217,17 +222,24 @@ markers.forEach((marker, index) => {
 
 
 /*
- * FRECCIA PRECEDENTE
+ * PRECEDENTE
  */
 
 infoPrev.addEventListener("click", () => {
 
-    if (currentIndex <= 0) {
+    if (!currentMarker) {
+        return;
+    }
+
+    const position =
+        markerOrder.indexOf(currentMarker);
+
+    if (position <= 0) {
         return;
     }
 
     showPlace(
-        currentIndex - 1,
+        markerOrder[position - 1],
         false
     );
 
@@ -235,20 +247,27 @@ infoPrev.addEventListener("click", () => {
 
 
 /*
- * FRECCIA SUCCESSIVA
+ * SUCCESSIVO
  */
 
 infoNext.addEventListener("click", () => {
 
+    if (!currentMarker) {
+        return;
+    }
+
+    const position =
+        markerOrder.indexOf(currentMarker);
+
     if (
-        currentIndex === -1 ||
-        currentIndex >= placeKeys.length - 1
+        position === -1 ||
+        position >= markerOrder.length - 1
     ) {
         return;
     }
 
     showPlace(
-        currentIndex + 1,
+        markerOrder[position + 1],
         false
     );
 

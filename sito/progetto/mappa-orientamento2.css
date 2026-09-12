@@ -224,8 +224,15 @@
 .map-info-image img {
     display: block;
     width: 100%;
-    height: auto;
+    height: 220px;
+    object-fit: cover;
     border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+    .map-info-image img {
+        height: 240px;
+    }
 }
 
 .map-info-content {

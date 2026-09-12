@@ -9,132 +9,215 @@ extra_css: sito/progetto/mappa-orientamento.css
     <h1>Mappa di orientamento</h1>
 
     <p>
-        Il progetto visto in relazione ai luoghi e ai punti di riferimento
-        più conosciuti della zona.
+        Il progetto visto in relazione ai luoghi e ai punti di riferimento più conosciuti della zona.
+        Tocca i punti blu per visualizzare i luoghi oppure usa le frecce per esplorarli.
     </p>
 </section>
 
 <section>
-    <div class="map-container"
-      data-map-scale="1"
-      data-base-path="{{ 'sito/img/progetto/mappa-orientamento/' | relative_url }}">
 
-        <img
-            src="{{ 'sito/img/progetto/mappa-orientamento.png' | relative_url }}"
-            alt="Mappa di orientamento del progetto con i principali punti di riferimento della zona"
+    <div class="map-wrapper">
+
+        <div
+            class="map-container"
+            id="map-container"
+            data-map-scale="1"
+            data-base-path="{{ 'sito/img/progetto/mappa-orientamento/' | relative_url }}"
         >
 
-        <button class="map-marker marker-isoletta" aria-label="Bar Isoletta" data-place="isoletta">
-            <span></span>
-        </button>
+            <div class="map-canvas" id="map-canvas">
 
-        <button class="map-marker marker-waqas" aria-label="Waqas Kebab" data-place="waqas">
-            <span></span>
-        </button>
+                <img
+                    src="{{ 'sito/img/progetto/mappa-orientamento.png' | relative_url }}"
+                    alt="Mappa di orientamento del progetto con i principali punti di riferimento della zona"
+                >
 
-        <button class="map-marker marker-hotel" aria-label="Hotel Polo Nautico" data-place="hotel">
-            <span></span>
-        </button>
+                <button class="map-marker marker-isoletta" aria-label="Bar Isoletta" data-place="isoletta">
+                    <span></span>
+                </button>
 
-        <button class="map-marker marker-quo-vadis" aria-label="Pizzeria Quo Vadis" data-place="quo-vadis">
-            <span></span>
-        </button>
+                <button class="map-marker marker-waqas" aria-label="Waqas Kebab" data-place="waqas">
+                    <span></span>
+                </button>
 
-        <button class="map-marker marker-piazzetta" aria-label="Piazzetta del Porticciolo" data-place="piazzetta">
-            <span></span>
-        </button>
+                <button class="map-marker marker-quo-vadis" aria-label="Pizzeria Quo Vadis" data-place="quo-vadis">
+                    <span></span>
+                </button>
 
-        <button class="map-marker marker-spiaggetta" aria-label="Spiaggetta del Porticciolo" data-place="spiaggetta">
-            <span></span>
-        </button>
+                <button class="map-marker marker-piazzetta" aria-label="Piazzetta del Porticciolo" data-place="piazzetta">
+                    <span></span>
+                </button>
+
+                <button class="map-marker marker-spiaggetta" aria-label="Spiaggetta del Porticciolo" data-place="spiaggetta">
+                    <span></span>
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="map-pan-cue" id="map-pan-cue" aria-hidden="true">
+            <span class="cue-finger"></span>
+            <span class="cue-label">SCORRI PER ESPLORARE</span>
+        </div>
 
     </div>
+
 
     <div class="map-info" id="map-info">
-        <img id="map-info-image" src="" alt="">
 
-        <div class="map-info-content">
-            <h2 id="map-info-title"></h2>
-            <p id="map-info-description"></p>
+        <!-- FRECCE FISSE -->
+        <div class="map-info-navs">
+
+            <button
+                class="map-info-nav map-info-prev"
+                type="button"
+                aria-label="Luogo precedente"
+            >
+                <span></span>
+            </button>
+
+            <button
+                class="map-info-nav map-info-next"
+                type="button"
+                aria-label="Luogo successivo"
+            >
+                <span></span>
+            </button>
+
         </div>
+
+
+        <div class="map-info-track" id="map-info-track">
+
+            <article class="map-info-card" data-place="isoletta">
+
+                <div class="map-info-image">
+                    <img
+                        src="{{ 'sito/img/progetto/mappa-orientamento/bar-isoletta.jpg' | relative_url }}"
+                        alt="Bar Isoletta"
+                    >
+                </div>
+
+                <div class="map-info-content">
+
+                    <div class="map-info-heading">
+                        <h2>Bar Isoletta</h2>
+                    </div>
+
+                    <p>
+                        Il Bar Isoletta si affaccia sulla spiaggetta del Porticciolo,
+                        uno degli spazi che verrebbero trasformati e cementificati dal progetto.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="map-info-card" data-place="waqas">
+
+                <div class="map-info-image">
+                    <img
+                        src="{{ 'sito/img/progetto/mappa-orientamento/waqas-kebab.jpg' | relative_url }}"
+                        alt="Waqas Kebab"
+                    >
+                </div>
+
+                <div class="map-info-content">
+
+                    <div class="map-info-heading">
+                        <h2>Waqas Kebab</h2>
+                    </div>
+
+                    <p>
+                        Waqas Kebab si trova di fronte alla Piazzetta del Porticciolo,
+                        lungo il tratto di quartiere interessato dal progetto.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="map-info-card" data-place="quo-vadis">
+
+                <div class="map-info-image">
+                    <img
+                        src="{{ 'sito/img/progetto/mappa-orientamento/pizzeria-quo-vadis.jpg' | relative_url }}"
+                        alt="Pizzeria Quo Vadis"
+                    >
+                </div>
+
+                <div class="map-info-content">
+
+                    <div class="map-info-heading">
+                        <h2>Pizzeria Quo Vadis</h2>
+                    </div>
+
+                    <p>
+                        La Pizzeria Quo Vadis è un altro punto di riferimento utile
+                        per orientarsi rispetto all'area del progetto.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="map-info-card" data-place="piazzetta">
+
+                <div class="map-info-image">
+                    <img
+                        src="{{ 'sito/img/progetto/mappa-orientamento/piazzetta-porticciolo.jpg' | relative_url }}"
+                        alt="Piazzetta del Porticciolo"
+                    >
+                </div>
+
+                <div class="map-info-content">
+
+                    <div class="map-info-heading">
+                        <h2>Piazzetta del Porticciolo</h2>
+                    </div>
+
+                    <p>
+                        La Piazzetta del Porticciolo verrebbe cancellata dal progetto
+                        e sostituita dalle nuove strutture previste.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="map-info-card" data-place="spiaggetta">
+
+                <div class="map-info-image">
+                    <img
+                        src="{{ 'sito/img/progetto/mappa-orientamento/spiaggetta-porticciolo.jpg' | relative_url }}"
+                        alt="Spiaggetta del Porticciolo"
+                    >
+                </div>
+
+                <div class="map-info-content">
+
+                    <div class="map-info-heading">
+                        <h2>Spiaggetta del Porticciolo</h2>
+                    </div>
+
+                    <p>
+                        La Spiaggetta del Porticciolo verrebbe cementificata e
+                        trasformata dalle opere previste dal progetto.
+                    </p>
+
+                </div>
+
+            </article>
+
+        </div>
+
     </div>
+
 </section>
 
-<script>
-const basePath = "{{ 'sito/img/progetto/mappa-orientamento/' | relative_url }}";
-
-const places = {
-    isoletta: {
-        title: "Bar Isoletta",
-        image: basePath + "bar-isoletta.jpg",
-        description: "Bar Isoletta si trova nelle immediate vicinanze dell'area interessata dal progetto."
-    },
-
-    waqas: {
-        title: "Waqas Kebab",
-        image: basePath + "waqas-kebab.jpg",
-        description: "Waqas Kebab è uno dei punti di riferimento presenti lungo il tratto di quartiere interessato."
-    },
-
-    hotel: {
-        title: "Hotel Polo Nautico",
-        image: basePath + "hotel-polo-nautico.jpg",
-        description: "L'Hotel Polo Nautico si trova in prossimità dell'area del progetto."
-    },
-
-    "quo-vadis": {
-        title: "Pizzeria Quo Vadis",
-        image: basePath + "pizzeria-quo-vadis.jpg",
-        description: "La Pizzeria Quo Vadis è un altro punto di riferimento utile per orientarsi rispetto all'area del progetto."
-    },
-
-    piazzetta: {
-        title: "Piazzetta del Porticciolo",
-        image: basePath + "piazzetta-porticciolo.jpg",
-        description: "La Piazzetta del Porticciolo è uno degli spazi direttamente interessati dalla trasformazione prevista dal progetto."
-    },
-
-    spiaggetta: {
-        title: "Spiaggetta del Porticciolo",
-        image: basePath + "spiaggetta-porticciolo.jpg",
-        description: "La Spiaggetta del Porticciolo è uno degli spazi direttamente interessati dalla trasformazione prevista dal progetto."
-    }
-};
-
-const markers = document.querySelectorAll(".map-marker");
-const info = document.getElementById("map-info");
-const infoImage = document.getElementById("map-info-image");
-const infoTitle = document.getElementById("map-info-title");
-const infoDescription = document.getElementById("map-info-description");
-
-let mapHasScrolled = false;
-
-markers.forEach(marker => {
-    marker.addEventListener("click", () => {
-        const place = places[marker.dataset.place];
-
-        markers.forEach(item => item.classList.remove("active"));
-        marker.classList.add("active");
-
-        infoImage.src = place.image;
-        infoImage.alt = place.title;
-        infoTitle.textContent = place.title;
-        infoDescription.textContent = place.description;
-
-        info.classList.add("visible");
-
-        if (!mapHasScrolled) {
-            mapHasScrolled = true;
-
-            setTimeout(() => {
-                const mapTop = document.querySelector(".map-container").getBoundingClientRect().top + window.scrollY;
-
-                window.scrollTo({
-                    top: mapTop - 30,
-                    behavior: "smooth"
-                });
-            }, 50);
-        }
-    });
-});
-</script>
+<script src="{{ 'sito/progetto/mappa-orientamento.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>

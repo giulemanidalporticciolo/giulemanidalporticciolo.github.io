@@ -160,20 +160,6 @@ function showPlace(marker, shouldScrollPage = true) {
 
 
     /*
-     * Aggiorna le frecce.
-     */
-
-    const position =
-        markerOrder.indexOf(marker);
-
-    infoPrev.disabled =
-        position <= 0;
-
-    infoNext.disabled =
-        position >= markerOrder.length - 1;
-
-
-    /*
      * Porta il marker al centro della mappa.
      */
 
@@ -239,7 +225,7 @@ markers.forEach(marker => {
 
 
 /*
- * PRECEDENTE
+ * PRECEDENTE — LOOP
  */
 
 infoPrev.addEventListener("click", () => {
@@ -251,12 +237,13 @@ infoPrev.addEventListener("click", () => {
     const position =
         markerOrder.indexOf(currentMarker);
 
-    if (position <= 0) {
-        return;
-    }
+    const previousPosition =
+        position <= 0
+            ? markerOrder.length - 1
+            : position - 1;
 
     showPlace(
-        markerOrder[position - 1],
+        markerOrder[previousPosition],
         false
     );
 
@@ -264,7 +251,7 @@ infoPrev.addEventListener("click", () => {
 
 
 /*
- * SUCCESSIVO
+ * SUCCESSIVO — LOOP
  */
 
 infoNext.addEventListener("click", () => {
@@ -276,15 +263,13 @@ infoNext.addEventListener("click", () => {
     const position =
         markerOrder.indexOf(currentMarker);
 
-    if (
-        position === -1 ||
+    const nextPosition =
         position >= markerOrder.length - 1
-    ) {
-        return;
-    }
+            ? 0
+            : position + 1;
 
     showPlace(
-        markerOrder[position + 1],
+        markerOrder[nextPosition],
         false
     );
 

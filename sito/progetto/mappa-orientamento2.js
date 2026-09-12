@@ -76,6 +76,7 @@ function showPlace(marker, shouldScrollPage = true) {
     const infoWasVisible =
         info.classList.contains("visible");
 
+
     /* --------------------------------------------------
        MARKER ATTIVO
     -------------------------------------------------- */
@@ -97,10 +98,6 @@ function showPlace(marker, shouldScrollPage = true) {
 
     /* --------------------------------------------------
        AREA SCHEDE
-
-       Questo è lo SCROLL ORIZZONTALE della scheda.
-       Primo click: nessuna animazione.
-       Click successivi: animazione.
     -------------------------------------------------- */
 
     info.classList.add("visible");
@@ -117,9 +114,6 @@ function showPlace(marker, shouldScrollPage = true) {
 
     /* --------------------------------------------------
        MAPPA
-
-       Questo è lo SCROLL ORIZZONTALE della mappa.
-       Nessuna animazione.
     -------------------------------------------------- */
 
     const markerLeft = marker.offsetLeft;
@@ -134,12 +128,6 @@ function showPlace(marker, shouldScrollPage = true) {
 
     /* --------------------------------------------------
        PAGINA
-
-       Questo è lo SCROLL VERTICALE dell'intera pagina.
-       Serve a centrare verticalmente il blocco
-       MAPPA + SCHEDA nel viewport.
-
-       È SEMPRE ANIMATO.
     -------------------------------------------------- */
 
     if (shouldScrollPage) {
@@ -202,6 +190,83 @@ markers.forEach(marker => {
 
 
 /* --------------------------------------------------
+   CALCOLO MARKER PIÙ VICINO
+-------------------------------------------------- */
+
+function getNearestMarker(currentMarker, direction) {
+    const currentX = currentMarker.offsetLeft;
+    const currentY = currentMarker.offsetTop;
+
+    let nearestMarker = null;
+    let nearestDistance = Infinity;
+
+    markers.forEach(marker => {
+        if (marker === currentMarker) return;
+
+        const markerX = marker.offsetLeft;
+        const markerY = marker.offsetTop;
+
+        const dx = markerX - currentX;
+        const dy = markerY - currentY;
+
+        /*
+         * Per PREV consideriamo i marker a sinistra.
+         * Per NEXT quelli a destra.
+         *
+         * La distanza viene comunque calcolata
+         * realmente in 2D, quindi un marker leggermente
+         * più in alto/basso ma molto vicino viene preferito
+         * a uno molto più distante.
+         */
+
+        if (direction === "next" && dx <= 0) return;
+        if (direction === "prev" && dx >= 0) return;
+
+        const distance =
+            Math.sqrt(
+                (dx * dx) +
+                (dy * dy)
+            );
+
+        if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestMarker = marker;
+        }
+    });
+
+    /*
+     * Se non c'è nessun marker nella direzione richiesta,
+     * ricominciamo dall'altro lato.
+     */
+
+    if (!nearestMarker) {
+        markers.forEach(marker => {
+            if (marker === currentMarker) return;
+
+            const markerX = marker.offsetLeft;
+            const markerY = marker.offsetTop;
+
+            const dx = markerX - currentX;
+            const dy = markerY - currentY;
+
+            const distance =
+                Math.sqrt(
+                    (dx * dx) +
+                    (dy * dy)
+                );
+
+            if (distance < nearestDistance) {
+                nearestDistance = distance;
+                nearestMarker = marker;
+            }
+        });
+    }
+
+    return nearestMarker;
+}
+
+
+/* --------------------------------------------------
    FRECCE SCHEDE
 -------------------------------------------------- */
 
@@ -217,36 +282,26 @@ navButtons.forEach(button => {
 
         if (!card) return;
 
-        const currentIndex =
-            Array.from(cards).indexOf(card);
+        const currentMarker =
+            document.querySelector(
+                `.map-marker[data-place="${card.dataset.place}"]`
+            );
 
-        let nextIndex;
+        if (!currentMarker) return;
 
-        if (button.classList.contains("map-info-prev")) {
-            nextIndex =
-                currentIndex <= 0
-                    ? cards.length - 1
-                    : currentIndex - 1;
-        } else {
-            nextIndex =
-                currentIndex >= cards.length - 1
-                    ? 0
-                    : currentIndex + 1;
-        }
+        const direction =
+            button.classList.contains("map-info-prev")
+                ? "prev"
+                : "next";
 
-        const nextCard = cards[nextIndex];
+        const nextMarker =
+            getNearestMarker(
+                currentMarker,
+                direction
+            );
 
-        const marker = document.querySelector(
-            `.map-marker[data-place="${nextCard.dataset.place}"]`
-        );
+        if (!nextMarker) return;
 
-        if (!marker) return;
-
-        /*
-         * Le frecce cambiano solo la scheda:
-         * scroll orizzontale della scheda animato,
-         * nessuno scroll verticale della pagina.
-         */
-        showPlace(marker, false);
+        showPlace(nextMarker, false);
     });
 });

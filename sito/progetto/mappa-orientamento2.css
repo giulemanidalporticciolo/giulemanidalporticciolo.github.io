@@ -146,8 +146,8 @@
     position: absolute;
     left: 50%;
     bottom: 20px;
-    width: 100px;
-    height: 20px;
+    width: 190px;
+    height: 28px;
     transform: translateX(-50%);
     z-index: 20;
     pointer-events: none;
@@ -157,7 +157,7 @@
 
 .map-pan-cue.visible {
     opacity: 1;
-    animation: pan-cue-move 1.8s ease-in-out infinite;
+    animation: pan-cue-pulse 1.8s ease-in-out infinite;
 }
 
 .map-pan-cue::before,
@@ -174,23 +174,23 @@
 }
 
 .map-pan-cue::before {
-    left: 0;
+    left: 2px;
     transform: rotate(-135deg);
 }
 
 .map-pan-cue::after {
-    right: 0;
+    right: 2px;
     transform: rotate(45deg);
 }
 
-@keyframes pan-cue-move {
+@keyframes pan-cue-pulse {
 
     0%, 100% {
-        transform: translateX(calc(-50% + 12px));
+        opacity: 0.55;
     }
 
     50% {
-        transform: translateX(calc(-50% - 4px));
+        opacity: 1;
     }
 
 }
@@ -202,7 +202,7 @@
     transform: translate(-50%, -50%);
     color: rgba(255, 255, 255, 0.9);
     font-family: "Barlow Condensed", sans-serif;
-    font-size: 0.7rem;
+    font-size: 1rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     white-space: nowrap;

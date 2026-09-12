@@ -133,6 +133,51 @@
 }
 
 
+/* CUE PANORAMICO */
+
+.map-pan-cue {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.map-pan-cue.visible {
+    opacity: 1;
+}
+
+.map-pan-cue::before {
+    content: "←  →";
+    display: block;
+    padding: 8px 12px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.35);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.2rem;
+    line-height: 1;
+    letter-spacing: 2px;
+    animation: pan-cue 1.8s ease-in-out infinite;
+}
+
+@keyframes pan-cue {
+
+    0%, 100% {
+        transform: translateX(0);
+        opacity: 0.65;
+    }
+
+    50% {
+        transform: translateX(-5px);
+        opacity: 1;
+    }
+
+}
+
+
 /* POPUP */
 
 .map-info {

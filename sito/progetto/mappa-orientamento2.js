@@ -1,4 +1,5 @@
-const info = document.getElementById("map-info");
+const info =
+    document.getElementById("map-info");
 
 const infoImage =
     document.getElementById("map-info-image");
@@ -12,6 +13,12 @@ const infoDescription =
 const markers =
     document.querySelectorAll(".map-marker");
 
+const mapContainer =
+    document.getElementById("map-container");
+
+const mapPanCue =
+    document.getElementById("map-pan-cue");
+
 
 /*
  * DATI DEI LUOGHI
@@ -21,6 +28,40 @@ const places =
     JSON.parse(
         document.getElementById("map-places").textContent
     );
+
+
+/*
+ * CUE PANORAMICO
+ */
+
+function updateMapPanCue() {
+
+    const isScrollable =
+        mapContainer.scrollWidth >
+        mapContainer.clientWidth;
+
+    const isAtStart =
+        mapContainer.scrollLeft <= 1;
+
+    if (isScrollable && isAtStart) {
+        mapPanCue.classList.add("visible");
+    } else {
+        mapPanCue.classList.remove("visible");
+    }
+
+}
+
+mapContainer.addEventListener(
+    "scroll",
+    updateMapPanCue
+);
+
+window.addEventListener(
+    "resize",
+    updateMapPanCue
+);
+
+updateMapPanCue();
 
 
 /*
@@ -76,9 +117,6 @@ markers.forEach(marker => {
 
         setTimeout(() => {
 
-            const mapContainer =
-                document.getElementById("map-container");
-
             const mapTop =
                 mapContainer.getBoundingClientRect().top +
                 window.scrollY;
@@ -86,7 +124,7 @@ markers.forEach(marker => {
 
             window.scrollTo({
 
-                top: mapTop - 20,
+                top: mapTop - 30,
 
                 behavior: "smooth"
 

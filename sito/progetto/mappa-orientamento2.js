@@ -128,24 +128,39 @@ function activateMarkerForCard(card) {
 
 
 /* --------------------------------------------------
-   RILEVA QUANDO LO SCROLL DELLE SCHEDE È TERMINATO
+   RILEVA LA SCHEDA CHE HA SUPERATO LA METÀ
 -------------------------------------------------- */
 
-let cardScrollTimer = null;
+function updateMarkerDuringCardScroll() {
+    const currentScroll = infoTrack.scrollLeft;
+    const viewportCenter =
+        currentScroll + (infoTrack.clientWidth / 2);
 
-function updateMarkerAfterCardScroll() {
-    clearTimeout(cardScrollTimer);
+    let currentCard = null;
+    let nearestDistance = Infinity;
 
-    cardScrollTimer = setTimeout(() => {
-        const currentCard = getCurrentCard();
+    cards.forEach(card => {
+        const cardCenter =
+            card.offsetLeft + (card.offsetWidth / 2);
 
-        if (currentCard) {
-            activateMarkerForCard(currentCard);
+        const distance =
+            Math.abs(cardCenter - viewportCenter);
+
+        if (distance < nearestDistance) {
+            nearestDistance = distance;
+            currentCard = card;
         }
-    }, 120);
+    });
+
+    if (currentCard) {
+        activateMarkerForCard(currentCard);
+    }
 }
 
-infoTrack.addEventListener("scroll", updateMarkerAfterCardScroll);
+infoTrack.addEventListener(
+    "scroll",
+    updateMarkerDuringCardScroll
+);
 
 
 /* --------------------------------------------------
@@ -323,7 +338,8 @@ navButtons.forEach(button => {
         if (!currentCard) return;
 
         const cardIndex =
-            Array.from(infoTrack.children).indexOf(currentCard);
+            Array.from(infoTrack.children)
+                .indexOf(currentCard);
 
         if (cardIndex === -1) return;
 

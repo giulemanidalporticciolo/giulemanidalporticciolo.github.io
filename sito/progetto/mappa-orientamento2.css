@@ -140,8 +140,8 @@
     position: absolute;
     left: 50%;
     bottom: 20px;
-    width: 44px;
-    height: 20px;
+    width: 64px;
+    height: 36px;
     transform: translateX(-50%);
     z-index: 20;
     pointer-events: none;
@@ -160,19 +160,19 @@
     top: 50%;
     width: 13px;
     height: 13px;
-    margin-top: -6.5px;
-    border-top: 2px solid rgba(255, 255, 255, 0.9);
-    border-right: 2px solid rgba(255, 255, 255, 0.9);
+    border-top: 3px solid rgba(255, 255, 255, 0.9);
+    border-right: 3px solid rgba(255, 255, 255, 0.9);
+    border-radius: 2px;
 }
 
 .map-pan-cue::before {
-    left: 0;
-    transform: rotate(-135deg);
+    left: 6px;
+    transform: translateY(-50%) rotate(-135deg);
 }
 
 .map-pan-cue::after {
-    right: 0;
-    transform: rotate(45deg);
+    right: 6px;
+    transform: translateY(-50%) rotate(45deg);
 }
 
 .map-pan-cue.visible::before,
@@ -181,13 +181,21 @@
 }
 
 @keyframes pan-cue-move {
-    0%, 100% {
-        translate: 12px 0;
+
+    0% {
+        translate: 0 0;
     }
+
     50% {
-        translate: -4px 0;
+        translate: -8px 0;
     }
+
+    100% {
+        translate: 8px 0;
+    }
+
 }
+
 
 /* POPUP */
 

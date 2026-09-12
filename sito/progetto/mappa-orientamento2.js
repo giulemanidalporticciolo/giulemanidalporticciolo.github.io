@@ -39,8 +39,8 @@ const places =
 /*
  * ORDINE DEI MARKER
  *
- * L'ordine viene determinato dalla posizione
- * orizzontale effettiva dei marker nella mappa.
+ * Determinato dalla posizione orizzontale
+ * dei marker nella mappa.
  */
 
 const markerOrder =

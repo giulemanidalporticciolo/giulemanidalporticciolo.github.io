@@ -128,8 +128,8 @@
 }
 
 .marker-piazzetta {
-    left: 54%;
-    top: 26%;
+    left: 25%;
+    top: 34%;
 }
 
 .marker-spiaggetta {
@@ -206,7 +206,6 @@
     width: 700px;
     max-width: 100%;
     margin: 30px 0 70px;
-    padding: 0 50px;
     gap: 25px;
     align-items: flex-start;
 }
@@ -215,16 +214,21 @@
     display: flex;
 }
 
-.map-info img {
-    display: block;
+.map-info-image {
+    position: relative;
     width: 300px;
     max-width: 45%;
+    flex-shrink: 0;
+}
+
+.map-info-image img {
+    display: block;
+    width: 100%;
     height: auto;
     border-radius: 12px;
 }
 
 .map-info-content {
-    position: relative;
     flex: 1;
 }
 
@@ -246,34 +250,37 @@
     height: 36px;
     padding: 0;
     border: 0;
-    background: transparent;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     cursor: pointer;
     transform: translateY(-50%);
+    z-index: 2;
 }
 
 .map-info-prev {
-    left: 0;
+    left: -18px;
 }
 
 .map-info-next {
-    right: 0;
+    right: -18px;
 }
 
 .map-info-nav span {
     display: block;
-    width: 13px;
-    height: 13px;
+    width: 10px;
+    height: 10px;
     border-top: 2px solid #1e5aa8;
     border-right: 2px solid #1e5aa8;
 }
 
 .map-info-prev span {
-    margin-left: 10px;
+    margin-left: 14px;
     transform: rotate(-135deg);
 }
 
 .map-info-next span {
-    margin-left: 5px;
+    margin-left: 11px;
     transform: rotate(45deg);
 }
 
@@ -312,11 +319,10 @@
         width: 100%;
         margin-top: 25px;
         margin-bottom: 50px;
-        padding: 0 45px;
         gap: 18px;
     }
 
-    .map-info img {
+    .map-info-image {
         width: 100%;
         max-width: 100%;
     }
@@ -335,17 +341,16 @@
     }
 
     .map-info-nav {
-        top: 50%;
         width: 34px;
         height: 34px;
     }
 
     .map-info-prev {
-        left: 0;
+        left: -17px;
     }
 
     .map-info-next {
-        right: 0;
+        right: -17px;
     }
 
 }

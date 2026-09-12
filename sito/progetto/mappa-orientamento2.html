@@ -75,16 +75,29 @@ extra_css: sito/progetto/mappa-orientamento2.css
 
     <div class="map-info" id="map-info">
 
-        <button
-            class="map-info-nav map-info-prev"
-            id="map-info-prev"
-            type="button"
-            aria-label="Luogo precedente"
-        >
-            <span></span>
-        </button>
+        <div class="map-info-image">
 
-        <img id="map-info-image" src="" alt="">
+            <img id="map-info-image" src="" alt="">
+
+            <button
+                class="map-info-nav map-info-prev"
+                id="map-info-prev"
+                type="button"
+                aria-label="Luogo precedente"
+            >
+                <span></span>
+            </button>
+
+            <button
+                class="map-info-nav map-info-next"
+                id="map-info-next"
+                type="button"
+                aria-label="Luogo successivo"
+            >
+                <span></span>
+            </button>
+
+        </div>
 
         <div class="map-info-content">
 
@@ -93,15 +106,6 @@ extra_css: sito/progetto/mappa-orientamento2.css
             <p id="map-info-description"></p>
 
         </div>
-
-        <button
-            class="map-info-nav map-info-next"
-            id="map-info-next"
-            type="button"
-            aria-label="Luogo successivo"
-        >
-            <span></span>
-        </button>
 
     </div>
 
